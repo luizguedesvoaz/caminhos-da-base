@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, ListChecks, Wallet, User } from "lucide-react";
+import { Home, ListChecks, Trophy, Wallet, User } from "lucide-react";
 
 const ITEMS = [
   { href: "/inicio", label: "Início", Icon: Home },
   { href: "/tarefas", label: "Tarefas", Icon: ListChecks },
-  { href: "/financeiro", label: "Financeiro", Icon: Wallet },
+  { href: "/temporada", label: "Temporada", Icon: Trophy },
+  { href: "/financeiro", label: "Gastos", Icon: Wallet },
   { href: "/perfil", label: "Perfil", Icon: User },
 ];
 
@@ -28,15 +29,11 @@ export function BottomNav() {
               <Link
                 href={href}
                 aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-1 py-2.5 text-xs font-medium transition-colors ${
+                className={`flex flex-col items-center gap-1 py-2.5 text-[11px] font-medium transition-colors ${
                   active ? "text-navy-900" : "text-muted"
                 }`}
               >
-                <Icon
-                  size={22}
-                  strokeWidth={active ? 2.4 : 1.8}
-                  aria-hidden
-                />
+                <Icon size={21} strokeWidth={active ? 2.4 : 1.8} aria-hidden />
                 {label}
               </Link>
             </li>

@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { AlertTriangle, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveAthlete } from "@/lib/athlete";
 import { AthleteHeader } from "@/components/AthleteHeader";
 import { Pyramid } from "@/components/Pyramid";
+import { AlertsCard, type Alert } from "@/components/AlertsCard";
 import { Card } from "@/components/ui";
 import { STEPS, NEXT_STEP_CHECKLIST, type Step } from "@/lib/domain/pyramid";
 import {
@@ -14,6 +15,8 @@ import {
 } from "@/lib/domain/category";
 import { formatCents } from "@/lib/domain/expenses";
 import { TASK_CATEGORIES, toISODate, type TaskCategory } from "@/lib/domain/tasks";
+import { documentStatus } from "@/lib/domain/documents";
+import { summarize, formatMinutes, type Match } from "@/lib/domain/season";
 
 export default async function InicioPage() {
   const { athlete, all } = await getActiveAthlete();
@@ -21,41 +24,121 @@ export default async function InicioPage() {
   const season = currentSeason();
 
   const today = new Date();
+  const todayIso = toISODate(today);
   const weekEnd = new Date();
   weekEnd.setDate(weekEnd.getDate() + 7);
 
-  const [{ data: evaluation }, { data: invested }, { data: weekTasks }] =
-    await Promise.all([
-      supabase
-        .rpc("current_pyramid_step", { p_athlete_id: athlete.id })
-        .single<{ step: number; reason: string }>(),
-      supabase.rpc("total_invested_cents", { p_athlete_id: athlete.id }),
-      supabase
-        .from("tasks")
-        .select("id, title, category, due_date, is_done")
-        .eq("athlete_id", athlete.id)
-        .is("deleted_at", null)
-        .eq("is_done", false)
-        .lte("due_date", toISODate(weekEnd))
-        .order("due_date")
-        .limit(50),
-    ]);
+  const [
+    { data: evaluation },
+    { data: invested },
+    { data: weekTasks },
+    { data: documents },
+    { data: registration },
+    { data: matches },
+  ] = await Promise.all([
+    supabase
+      .rpc("current_pyramid_step", { p_athlete_id: athlete.id })
+      .single<{ step: number; reason: string }>(),
+    supabase.rpc("total_invested_cents", { p_athlete_id: athlete.id }),
+    supabase
+      .from("tasks")
+      .select("id, category, due_date")
+      .eq("athlete_id", athlete.id)
+      .is("deleted_at", null)
+      .eq("is_done", false)
+      .lte("due_date", toISODate(weekEnd))
+      .order("due_date")
+      .limit(50),
+    supabase
+      .from("documents")
+      .select("id, title, expires_on")
+      .eq("athlete_id", athlete.id)
+      .is("deleted_at", null)
+      .not("expires_on", "is", null),
+    supabase
+      .from("federation_registrations")
+      .select("transfer_window_ends_on")
+      .eq("athlete_id", athlete.id)
+      .eq("season_year", season)
+      .maybeSingle(),
+    supabase
+      .from("matches")
+      .select(
+        "id, played_on, opponent, competition_name, minutes_played, goals, assists, video_url, notes",
+      )
+      .eq("athlete_id", athlete.id)
+      .eq("season_year", season)
+      .is("deleted_at", null),
+  ]);
 
   const step = (evaluation?.step ?? 1) as Step;
   const category = categoryFor(athlete.birth_year, season);
   const yearInCategory = categoryYear(athlete.birth_year, season);
 
   const tasks = weekTasks ?? [];
-  const todayIso = toISODate(today);
   const overdue = tasks.filter((t) => t.due_date && t.due_date < todayIso);
   const thisWeek = tasks.filter((t) => !t.due_date || t.due_date >= todayIso);
 
-  // Contagem por categoria — a "visão semanal por categoria" do briefing.
   const perCategory = new Map<TaskCategory, number>();
   for (const t of thisWeek) {
     const key = t.category as TaskCategory;
     perCategory.set(key, (perCategory.get(key) ?? 0) + 1);
   }
+
+  // ---- Alertas, em ordem de urgência ----
+  const alerts: Alert[] = [];
+
+  if (overdue.length > 0) {
+    alerts.push({
+      key: "tarefas",
+      href: "/tarefas",
+      tone: "urgent",
+      icon: "task",
+      text:
+        overdue.length === 1
+          ? "1 tarefa atrasada"
+          : `${overdue.length} tarefas atrasadas`,
+    });
+  }
+
+  for (const doc of documents ?? []) {
+    const { status, days } = documentStatus(doc.expires_on);
+    if (status === "vencido") {
+      alerts.push({
+        key: `doc-${doc.id}`,
+        href: "/documentos",
+        tone: "urgent",
+        icon: "document",
+        text: `${doc.title} está vencido`,
+      });
+    } else if (status === "vencendo") {
+      alerts.push({
+        key: `doc-${doc.id}`,
+        href: "/documentos",
+        tone: "warning",
+        icon: "document",
+        text:
+          days === 0
+            ? `${doc.title} vence hoje`
+            : `${doc.title} vence em ${days} ${days === 1 ? "dia" : "dias"}`,
+      });
+    }
+  }
+
+  if (registration?.transfer_window_ends_on) {
+    const { status, days } = documentStatus(registration.transfer_window_ends_on);
+    if (status === "vencendo") {
+      alerts.push({
+        key: "janela",
+        href: "/documentos",
+        tone: "warning",
+        icon: "federation",
+        text: `Janela de transferência fecha em ${days} ${days === 1 ? "dia" : "dias"}`,
+      });
+    }
+  }
+
+  const stats = summarize((matches ?? []) as Match[]);
 
   const subtitle = [
     categoryLabel(category),
@@ -69,19 +152,7 @@ export default async function InicioPage() {
     <>
       <AthleteHeader athlete={athlete} all={all} subtitle={subtitle} />
 
-      {overdue.length > 0 && (
-        <Link href="/tarefas" className="mb-4 block">
-          <div className="flex items-center gap-3 rounded-xl bg-red-50 p-4">
-            <AlertTriangle size={20} className="shrink-0 text-red-700" aria-hidden />
-            <p className="flex-1 text-sm text-red-800">
-              {overdue.length === 1
-                ? "1 tarefa atrasada"
-                : `${overdue.length} tarefas atrasadas`}
-            </p>
-            <ChevronRight size={18} className="text-red-700" aria-hidden />
-          </div>
-        </Link>
-      )}
+      <AlertsCard alerts={alerts.slice(0, 4)} />
 
       <Card className="bg-navy-900 text-white">
         <p className="text-xs font-semibold uppercase tracking-wide text-gold-400">
@@ -154,6 +225,24 @@ export default async function InicioPage() {
           )}
         </Card>
       </Link>
+
+      {stats.matches > 0 && (
+        <Link href="/temporada" className="mt-4 block">
+          <Card>
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-muted">Minutos em campo em {season}</p>
+              <ChevronRight size={18} className="text-muted" aria-hidden />
+            </div>
+            <p className="mt-1 text-3xl font-bold tabular-nums text-navy-900">
+              {formatMinutes(stats.minutes)}
+            </p>
+            <p className="mt-1 text-sm text-muted">
+              {stats.matches} {stats.matches === 1 ? "jogo" : "jogos"} · média de{" "}
+              {stats.averageMinutes} min
+            </p>
+          </Card>
+        </Link>
+      )}
 
       <Link href="/financeiro" className="mt-4 block">
         <Card>

@@ -144,3 +144,31 @@ celular não tem hover.
 **Mensagens de erro.** O motivo real do banco agora chega à tela, traduzido quando
 possível. Na onda 1, um "Não foi possível salvar" genérico escondeu um bug de RLS
 e custou uma investigação inteira.
+
+---
+
+## Onda 3 — temporada, documentos e vínculo federativo
+
+**Antes de subir o código, rode `supabase/migrations/0004_storage_documentos.sql`**
+no SQL Editor. Ele cria o espaço de armazenamento dos documentos e suas políticas.
+
+**Temporada.** Registro de jogos com minutos, gols, assistências e link de vídeo.
+Links do YouTube (incluindo `youtu.be` e Shorts) tocam dentro do app, em modo
+sem cookies. Seletor de temporada dá acesso aos anos anteriores.
+
+**Minutagem é o número-título**, acima de gols. Olheiro de base avalia minutos em
+campo e constância; pai olha gol. A hierarquia visual da tela ensina isso.
+
+**Documentos.** Anexo de foto ou PDF (até 10 MB), data de validade e aviso 30 dias
+antes. O bucket é privado: os arquivos ficam em pastas com o id do atleta, e a
+política do Storage reusa `can_access_athlete` — a mesma regra do resto do app.
+A visualização usa link assinado com validade de 10 minutos, nunca URL pública.
+
+**Vínculo federativo.** Registro da inscrição e da janela de transferência, com
+alerta quando o prazo se aproxima. É a dor invisível da base: a inscrição prende
+o atleta ao clube durante a temporada, e a maioria das famílias descobre isso
+tarde demais.
+
+**Alertas no dashboard.** Tarefas atrasadas, documentos vencidos ou vencendo, e
+janela de transferência fechando — em ordem de urgência, sempre com ícone e texto,
+nunca só com cor.

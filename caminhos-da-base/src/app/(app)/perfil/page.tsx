@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LogOut, MessageCircle, Plus } from "lucide-react";
+import { FileText, LogOut, MessageCircle, Plus } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveAthlete } from "@/lib/athlete";
 import { AthleteHeader } from "@/components/AthleteHeader";
@@ -139,6 +139,13 @@ export default async function PerfilPage() {
       </Card>
 
       <div className="mt-6 space-y-2">
+        <Link
+          href="/documentos"
+          className="flex items-center gap-2 rounded-xl border border-line bg-white px-4 py-3.5 text-sm font-semibold text-ink"
+        >
+          <FileText size={16} aria-hidden />
+          Documentos e vínculo federativo
+        </Link>
         <Link
           href="/onboarding"
           className="flex items-center gap-2 rounded-xl border border-line bg-white px-4 py-3.5 text-sm font-semibold text-ink"
