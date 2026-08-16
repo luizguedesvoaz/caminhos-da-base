@@ -115,3 +115,32 @@ supabase/
 | 3 | Temporada, jogos com vídeo, documentos, alertas, vínculo federativo |
 | 4 | Gamificação, moedas, recompensas, indicação |
 | 5 | Painel do consultor e editor de regras da pirâmide |
+
+---
+
+## Onda 2 — tarefas, financeiro e dashboard
+
+**Novas telas:** Tarefas, Financeiro e Perfil, com barra de navegação inferior.
+
+**Tarefas.** Seis categorias fixas com cor e ícone, agrupadas por dia, conclusão
+em um toque. Recorrência semanal gera as ocorrências das próximas 8 semanas como
+linhas reais no banco — cada dia vira uma tarefa independente, o que mantém
+consulta e conclusão simples. Quando não há nenhuma tarefa, o app sugere uma
+checklist inicial baseada no degrau do atleta.
+
+**Financeiro.** Total investido como número-herói, gráfico por categoria, evolução
+mensal e lançamento em poucos toques. O campo de valor aceita `150`, `150,50`,
+`1.250,90` e `R$ 89,90`; entradas ambíguas são recusadas em vez de adivinhadas.
+
+**Cores das categorias.** Vêm da paleta categórica validada para daltonismo
+(protanopia e deuteranopia, ΔE mínimo 9.1). A cor nunca identifica sozinha —
+sempre acompanha rótulo em texto.
+
+**Gráficos.** Matiz única, não uma cor por categoria: as categorias são nominais
+e a identidade já vem do rótulo, então colorir cada barra gastaria o canal de cor
+recodificando o que o comprimento já mostra. Valores rotulados diretamente, já que
+celular não tem hover.
+
+**Mensagens de erro.** O motivo real do banco agora chega à tela, traduzido quando
+possível. Na onda 1, um "Não foi possível salvar" genérico escondeu um bug de RLS
+e custou uma investigação inteira.

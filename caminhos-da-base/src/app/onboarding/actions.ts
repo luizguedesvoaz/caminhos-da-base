@@ -63,16 +63,25 @@ export async function createAthlete(
     .select("id")
     .single();
 
+  // O motivo real do banco chega à tela. Na onda 1, uma mensagem genérica
+  // escondeu um bug de RLS e custou uma investigação inteira.
   if (athleteError || !athlete) {
-    return { error: "Não foi possível salvar o atleta. Tente novamente." };
+    return {
+      error: athleteError
+        ? `Não foi possível salvar: ${athleteError.message}`
+        : "Não foi possível salvar o atleta.",
+    };
   }
 
   // 2. Vincula o responsável.
-  await supabase.from("guardianships").insert({
+  const { error: guardianError } = await supabase.from("guardianships").insert({
     athlete_id: athlete.id,
     user_id: user.id,
     is_primary: true,
   });
+  if (guardianError) {
+    return { error: `Erro ao vincular responsável: ${guardianError.message}` };
+  }
 
   // 3. Abre a temporada corrente, com a categoria calculada pelo ANO
   //    de nascimento — nunca pela idade.
