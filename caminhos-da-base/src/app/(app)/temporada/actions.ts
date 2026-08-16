@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import { youtubeId } from "@/lib/domain/season";
 
 export type MatchState = { error?: string; ok?: boolean };
 
@@ -72,4 +71,6 @@ export async function deleteMatch(matchId: string) {
   revalidatePath("/temporada");
 }
 
-export { youtubeId };
+// Nada de reexportar `youtubeId` daqui: num arquivo "use server" todo export
+// vira uma ação de servidor, e só função assíncrona pode ser exportada.
+// Quem precisa dela importa direto de @/lib/domain/season.
