@@ -35,17 +35,37 @@ export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
   const isPublic = PUBLIC_ROUTES.includes(path);
 
-  if (!user && !isPublic) {
+  /**
+   * Transfere para o redirecionamento os cookies de sessão que o Supabase
+   * acabou de renovar.
+   *
+   * BUG CORRIGIDO (onda 3): antes, um redirecionamento criava uma resposta
+   * nova e descartava esses cookies. Quando o token de acesso expirava, o
+   * Supabase rotacionava o token de renovação e invalidava o antigo — mas o
+   * novo era jogado fora junto com a resposta. O navegador ficava segurando
+   * um token já morto, toda requisição seguinte falhava, e o app entrava em
+   * ciclo eterno de login. Era exatamente o sintoma relatado na tela de
+   * documentos: cair em /entrar e a tela de login não devolver para dentro.
+   */
+  function redirectPreservingSession(pathname: string, keepNext = false) {
     const url = request.nextUrl.clone();
-    url.pathname = "/entrar";
-    url.searchParams.set("proximo", path);
-    return NextResponse.redirect(url);
+    url.pathname = pathname;
+    if (keepNext) url.searchParams.set("proximo", path);
+    else url.search = "";
+
+    const redirect = NextResponse.redirect(url);
+    for (const cookie of response.cookies.getAll()) {
+      redirect.cookies.set(cookie);
+    }
+    return redirect;
+  }
+
+  if (!user && !isPublic) {
+    return redirectPreservingSession("/entrar", true);
   }
 
   if (user && (path === "/entrar" || path === "/cadastro")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/inicio";
-    return NextResponse.redirect(url);
+    return redirectPreservingSession("/inicio");
   }
 
   return response;
