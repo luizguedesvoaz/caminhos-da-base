@@ -30,7 +30,7 @@ export function AlertsCard({ alerts }: { alerts: Alert[] }) {
         return (
           <li key={alert.key}>
             <Link
-              href={alert.href}
+              href={alert.href} prefetch={false}
               className={`flex items-center gap-3 rounded-xl p-4 ${
                 urgent ? "bg-red-50" : "bg-amber-50"
               }`}

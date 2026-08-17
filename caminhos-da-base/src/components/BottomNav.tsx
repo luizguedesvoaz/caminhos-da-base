@@ -28,6 +28,11 @@ export function BottomNav() {
             <li key={href} className="flex-1">
               <Link
                 href={href}
+                /* Sem pré-carregamento: cada busca em segundo plano abre uma
+                   sessão no servidor e disputa a renovação do token, o que
+                   derrubava a sessão do usuário. O ganho de velocidade não
+                   compensa o risco. */
+                prefetch={false}
                 aria-current={active ? "page" : undefined}
                 className={`flex flex-col items-center gap-1 py-2.5 text-[11px] font-medium transition-colors ${
                   active ? "text-navy-900" : "text-muted"

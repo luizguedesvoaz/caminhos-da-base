@@ -92,7 +92,7 @@ export default async function ResultadoPage({
       )}
 
       <div className="mt-8">
-        <LinkButton href="/inicio" variant="gold">
+        <LinkButton href="/inicio" prefetch={false} variant="gold">
           Ir para o início
         </LinkButton>
       </div>

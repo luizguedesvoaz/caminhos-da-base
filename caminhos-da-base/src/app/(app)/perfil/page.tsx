@@ -140,21 +140,21 @@ export default async function PerfilPage() {
 
       <div className="mt-6 space-y-2">
         <Link
-          href="/documentos"
+          href="/documentos" prefetch={false}
           className="flex items-center gap-2 rounded-xl border border-line bg-white px-4 py-3.5 text-sm font-semibold text-ink"
         >
           <FileText size={16} aria-hidden />
           Documentos e vínculo federativo
         </Link>
         <Link
-          href="/onboarding"
+          href="/onboarding" prefetch={false}
           className="flex items-center gap-2 rounded-xl border border-line bg-white px-4 py-3.5 text-sm font-semibold text-ink"
         >
           <Plus size={16} aria-hidden />
           Cadastrar outro atleta
         </Link>
         <Link
-          href="/sair"
+          href="/sair" prefetch={false}
           className="flex items-center gap-2 rounded-xl border border-line bg-white px-4 py-3.5 text-sm text-muted"
         >
           <LogOut size={16} aria-hidden />

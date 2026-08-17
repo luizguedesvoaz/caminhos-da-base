@@ -4,6 +4,34 @@ import { NextResponse, type NextRequest } from "next/server";
 const PUBLIC_ROUTES = ["/", "/entrar", "/cadastro", "/privacidade", "/termos"];
 
 export async function proxy(request: NextRequest) {
+  /**
+   * BUG CORRIGIDO (o "ciclo eterno de login"): pré-carregamento derrubava a sessão.
+   *
+   * O Next.js busca as telas em segundo plano antes do clique, para a navegação
+   * parecer instantânea. Cada uma dessas buscas passava por aqui e chamava
+   * `getUser()`, que renova o token quando ele está vencido — e o Supabase
+   * ROTACIONA o token de renovação a cada uso, invalidando o anterior.
+   *
+   * Com várias buscas simultâneas, só a primeira renovação valia: as demais
+   * recebiam "token inválido" e, pior, a última resposta a chegar gravava no
+   * navegador um token já morto. A sessão morria sozinha, sem ninguém tocar
+   * em nada.
+   *
+   * Além disso, quando um pré-carregamento era redirecionado para /entrar, o
+   * Next guardava esse redirecionamento no cache do roteador. O clique seguinte
+   * nem consultava o servidor: ia direto para o login. Era exatamente o sintoma
+   * observado — digitar /documentos na barra de endereço funcionava, clicar no
+   * link da mesma tela não.
+   *
+   * Pré-carregamento não é navegação de gente: não precisa de verificação de
+   * acesso, e portanto sai daqui sem tocar na sessão. A proteção real dos dados
+   * nunca dependeu desta função — está nas políticas RLS do banco, que valem
+   * para qualquer requisição.
+   */
+  if (request.headers.get("next-router-prefetch") === "1") {
+    return NextResponse.next({ request });
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -27,7 +55,6 @@ export async function proxy(request: NextRequest) {
     },
   );
 
-  // Revalida a sessão. Não remover: mantém o token atualizado a cada request.
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -36,16 +63,13 @@ export async function proxy(request: NextRequest) {
   const isPublic = PUBLIC_ROUTES.includes(path);
 
   /**
-   * Transfere para o redirecionamento os cookies de sessão que o Supabase
-   * acabou de renovar.
+   * Redirecionamento que carrega consigo os cookies de sessão recém-renovados.
+   * Sem isso, criar uma resposta nova descartava o token novo e o navegador
+   * ficava com o antigo, já invalidado pela rotação.
    *
-   * BUG CORRIGIDO (onda 3): antes, um redirecionamento criava uma resposta
-   * nova e descartava esses cookies. Quando o token de acesso expirava, o
-   * Supabase rotacionava o token de renovação e invalidava o antigo — mas o
-   * novo era jogado fora junto com a resposta. O navegador ficava segurando
-   * um token já morto, toda requisição seguinte falhava, e o app entrava em
-   * ciclo eterno de login. Era exatamente o sintoma relatado na tela de
-   * documentos: cair em /entrar e a tela de login não devolver para dentro.
+   * O cabeçalho `no-store` impede que navegador e CDN guardem o desvio para o
+   * login: um redirecionamento de autenticação em cache prende o usuário fora
+   * do app mesmo depois de a sessão voltar a valer.
    */
   function redirectPreservingSession(pathname: string, keepNext = false) {
     const url = request.nextUrl.clone();
@@ -57,6 +81,7 @@ export async function proxy(request: NextRequest) {
     for (const cookie of response.cookies.getAll()) {
       redirect.cookies.set(cookie);
     }
+    redirect.headers.set("Cache-Control", "no-store, must-revalidate");
     return redirect;
   }
 

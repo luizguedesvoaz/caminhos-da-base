@@ -188,7 +188,7 @@ export default async function InicioPage() {
         </Card>
       )}
 
-      <Link href="/tarefas" className="mt-4 block">
+      <Link href="/tarefas" prefetch={false} className="mt-4 block">
         <Card>
           <div className="flex items-center justify-between">
             <h2 className="font-semibold text-navy-900">Sua semana</h2>
@@ -227,7 +227,7 @@ export default async function InicioPage() {
       </Link>
 
       {stats.matches > 0 && (
-        <Link href="/temporada" className="mt-4 block">
+        <Link href="/temporada" prefetch={false} className="mt-4 block">
           <Card>
             <div className="flex items-center justify-between">
               <p className="text-sm text-muted">Minutos em campo em {season}</p>
@@ -244,7 +244,7 @@ export default async function InicioPage() {
         </Link>
       )}
 
-      <Link href="/financeiro" className="mt-4 block">
+      <Link href="/financeiro" prefetch={false} className="mt-4 block">
         <Card>
           <div className="flex items-center justify-between">
             <p className="text-sm text-muted">Total investido</p>
