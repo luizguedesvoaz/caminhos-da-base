@@ -62,7 +62,7 @@ export default async function AtletaPage({
             {categoryLabel(athlete.category as never)}
             {athlete.category_year &&
               ` · ${athlete.category_year === "primeiro" ? "1º" : "2º"} ano`}
-            {athlete.athlete_position && ` · ${athlete.athlete_position}`}
+            {athlete.position && ` · ${athlete.position}`}
             {athlete.club_name && ` · ${athlete.club_name}`}
           </p>
         </div>
