@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, UserCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveAthlete } from "@/lib/athlete";
 import { AthleteHeader } from "@/components/AthleteHeader";
@@ -254,6 +254,18 @@ export default async function InicioPage() {
             {formatCents(Number(invested ?? 0))}
           </p>
         </Card>
+      </Link>
+
+      {/* Perfil saiu da barra inferior para dar lugar a Conquistas; o acesso
+          passa a ser por aqui, onde documentos e vínculo também são alcançados. */}
+      <Link
+        href="/perfil"
+        prefetch={false}
+        className="mt-4 flex items-center gap-2 rounded-xl border border-line bg-white px-4 py-3.5 text-sm font-semibold text-ink"
+      >
+        <UserCircle size={18} aria-hidden />
+        Perfil, documentos e vínculo
+        <ChevronRight size={18} className="ml-auto text-muted" aria-hidden />
       </Link>
     </>
   );
