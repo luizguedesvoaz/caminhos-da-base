@@ -34,7 +34,7 @@ export type AthleteOverview = {
   category: number | null;
   category_year: string | null;
   club_name: string | null;
-  position: string | null;
+  athlete_position: string | null;   // `position` e palavra reservada no PostgreSQL
   step: number | null;
   step_reason: string | null;
   guardian_name: string | null;
