@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getActiveAthlete } from "@/lib/athlete";
 import { AthleteHeader } from "@/components/AthleteHeader";
 import { Card } from "@/components/ui";
+import { ScoutingToggle } from "@/components/ScoutingToggle";
 import { BRAND } from "@/lib/config";
 import { STEPS, type Step } from "@/lib/domain/pyramid";
 import {
@@ -121,6 +122,12 @@ export default async function PerfilPage() {
           </ul>
         </Card>
       )}
+
+      <ScoutingToggle
+        athleteId={athlete.id}
+        visible={athlete.scouting_visible ?? true}
+        athleteName={athlete.full_name.split(" ")[0]}
+      />
 
       <Card className="mt-4">
         <h2 className="font-semibold text-navy-900">Falar com o consultor</h2>

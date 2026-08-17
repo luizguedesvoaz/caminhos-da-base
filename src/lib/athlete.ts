@@ -10,6 +10,7 @@ export type AthleteRow = {
   birth_year: number;
   position: string | null;
   current_club_name: string | null;
+  scouting_visible: boolean | null;
 };
 
 /**
@@ -25,7 +26,7 @@ export async function getAthletes(): Promise<AthleteRow[]> {
   const supabase = await createClient();
   const { data } = await supabase
     .from("athletes")
-    .select("id, full_name, birth_year, position, current_club_name")
+    .select("id, full_name, birth_year, position, current_club_name, scouting_visible")
     .is("deleted_at", null)
     .order("created_at");
   return data ?? [];

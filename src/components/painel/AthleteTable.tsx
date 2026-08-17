@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight, FileWarning, PauseCircle } from "lucide-react";
+import { ChevronRight, EyeOff, FileWarning, PauseCircle } from "lucide-react";
 import { formatCents } from "@/lib/domain/expenses";
 import { formatMinutes } from "@/lib/domain/season";
 import { categoryLabel } from "@/lib/domain/category";
@@ -57,6 +57,12 @@ export function AthleteTable({ athletes }: { athletes: AthleteOverview[] }) {
                         Pausada
                       </span>
                     )}
+                    {!athlete.scouting_visible && (
+                      <span className="flex items-center gap-1 rounded-full bg-navy-900/8 px-2 py-0.5 text-xs font-medium text-muted">
+                        <EyeOff size={11} aria-hidden />
+                        Fora da vitrine
+                      </span>
+                    )}
                     {athlete.docs_expired > 0 && (
                       <span className="flex items-center gap-1 rounded-full bg-red-50 px-2 py-0.5 text-xs font-medium text-red-800">
                         <FileWarning size={11} aria-hidden />
@@ -96,6 +102,18 @@ export function AthleteTable({ athletes }: { athletes: AthleteOverview[] }) {
                         {formatMinutes(athlete.minutes_season)}
                       </strong>{" "}
                       em campo
+                    </span>
+                    <span>
+                      <strong className="tabular-nums text-ink">
+                        {athlete.goals_season}
+                      </strong>{" "}
+                      {athlete.goals_season === 1 ? "gol" : "gols"}
+                    </span>
+                    <span>
+                      <strong className="tabular-nums text-ink">
+                        {athlete.assists_season}
+                      </strong>{" "}
+                      {athlete.assists_season === 1 ? "assist." : "assist."}
                     </span>
                     <span>
                       <strong className="tabular-nums text-ink">

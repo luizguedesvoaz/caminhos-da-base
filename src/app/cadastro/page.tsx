@@ -125,6 +125,23 @@ export default function CadastroPage() {
           />
         </Field>
 
+        {/* Aviso de vitrine em DESTAQUE, não escondido na política.
+            O modelo é opt-out: o atleta entra visível a parceiros e a família
+            sai quando quiser. Num arranjo assim, a clareza deste texto no
+            momento do cadastro é o que sustenta a escolha. */}
+        <div className="rounded-xl border border-gold-500 bg-gold-500/10 p-4">
+          <p className="text-sm font-semibold text-navy-900">
+            Apresentação a clubes e parceiros
+          </p>
+          <p className="mt-1.5 text-sm leading-relaxed text-ink">
+            O perfil esportivo do seu atleta — categoria, posição, clube,
+            minutos em campo, gols e assistências — poderá ser apresentado a
+            clubes, empresários e parceiros da consultoria.{" "}
+            <strong>Telefone, documentos e gastos nunca são compartilhados.</strong>{" "}
+            Você pode desativar isso a qualquer momento na tela de Perfil.
+          </p>
+        </div>
+
         <label className="flex items-start gap-3 rounded-xl bg-navy-50 p-4">
           <input
             type="checkbox"
@@ -134,8 +151,8 @@ export default function CadastroPage() {
             className="mt-0.5 size-5 shrink-0 accent-navy-900"
           />
           <span className="text-sm leading-relaxed text-ink">
-            Sou responsável legal pelo atleta e autorizo o tratamento dos dados
-            dele conforme a{" "}
+            Sou responsável legal pelo atleta, li o aviso acima e autorizo o
+            tratamento dos dados dele conforme a{" "}
             <Link href="/privacidade" className="underline">
               Política de Privacidade
             </Link>

@@ -1,15 +1,12 @@
 import Link from "next/link";
 import { AlertTriangle, Users, TrendingUp, FileWarning } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
-import { AthleteTable } from "@/components/painel/AthleteTable";
+import { AthleteExplorer } from "@/components/painel/AthleteExplorer";
 import { formatCents } from "@/lib/domain/expenses";
 import {
   engagementOf,
-  sortAthletes,
-  SORT_LABELS,
   type AthleteOverview,
   type ConsultantStats,
-  type SortKey,
 } from "@/lib/consultant";
 
 export default async function PainelPage({
@@ -28,10 +25,6 @@ export default async function PainelPage({
   const s = (stats ?? {}) as ConsultantStats;
   let athletes = (overview ?? []) as AthleteOverview[];
 
-  const sortKey: SortKey = (
-    ordem && ordem in SORT_LABELS ? ordem : "atividade"
-  ) as SortKey;
-
   if (filtro === "sumidos") {
     athletes = athletes.filter(
       (a) => engagementOf(a) === "sumido" || engagementOf(a) === "esfriando",
@@ -41,8 +34,6 @@ export default async function PainelPage({
   } else if (filtro === "pausados") {
     athletes = athletes.filter((a) => a.guardian_blocked);
   }
-
-  athletes = sortAthletes(athletes, sortKey);
 
   const all = (overview ?? []) as AthleteOverview[];
   const slipping = all.filter((a) => {
@@ -168,39 +159,10 @@ export default async function PainelPage({
       )}
 
       <section className="mt-6">
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-sm font-semibold text-navy-900">
-            Atletas ({athletes.length})
-          </h2>
-          <div className="flex flex-wrap gap-1.5">
-            {(Object.keys(SORT_LABELS) as SortKey[]).map((key) => (
-              <Link
-                key={key}
-                href={`/painel?ordem=${key}${filtro ? `&filtro=${filtro}` : ""}`}
-                prefetch={false}
-                className={`rounded-full px-3 py-1.5 text-xs font-medium ${
-                  key === sortKey
-                    ? "bg-navy-900 text-white"
-                    : "border border-line bg-white text-muted"
-                }`}
-              >
-                {SORT_LABELS[key]}
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        {filtro && (
-          <Link
-            href={`/painel?ordem=${sortKey}`}
-            prefetch={false}
-            className="mb-3 inline-block text-xs text-navy-900 underline"
-          >
-            Limpar filtro
-          </Link>
-        )}
-
-        <AthleteTable athletes={athletes} />
+        <h2 className="mb-3 text-sm font-semibold text-navy-900">
+          Buscar atletas
+        </h2>
+        <AthleteExplorer athletes={athletes} />
       </section>
     </>
   );

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { requireConsultant } from "@/lib/consultant";
+import { requireConsultant } from "@/lib/consultant-guard";
 import { BRAND } from "@/lib/config";
 
 /**
