@@ -24,8 +24,11 @@ export default function LandingPage() {
       </div>
 
       <div className="mt-10 space-y-3">
-        <LinkButton href="/cadastro" variant="gold">
-          Tenho um código de convite
+        <LinkButton href="/solicitar" variant="gold">
+          Solicite seu código
+        </LinkButton>
+        <LinkButton href="/cadastro" variant="ghost">
+          Já tenho um código de convite
         </LinkButton>
         <LinkButton href="/entrar" variant="ghost">
           Já tenho conta
