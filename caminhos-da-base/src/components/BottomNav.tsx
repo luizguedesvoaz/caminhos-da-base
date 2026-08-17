@@ -2,14 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, ListChecks, Trophy, Wallet, User } from "lucide-react";
+import { Home, ListChecks, Trophy, Wallet, Medal } from "lucide-react";
 
+/**
+ * Cinco itens é o limite confortável para o polegar num celular. Conquistas
+ * entra no lugar de Perfil, que passa a ser alcançado pelo nome do atleta no
+ * topo — gamificação precisa estar visível para funcionar, perfil é consultado
+ * uma vez e esquecido.
+ */
 const ITEMS = [
   { href: "/inicio", label: "Início", Icon: Home },
   { href: "/tarefas", label: "Tarefas", Icon: ListChecks },
   { href: "/temporada", label: "Temporada", Icon: Trophy },
   { href: "/financeiro", label: "Gastos", Icon: Wallet },
-  { href: "/perfil", label: "Perfil", Icon: User },
+  { href: "/conquistas", label: "Conquistas", Icon: Medal },
 ];
 
 export function BottomNav() {

@@ -105,8 +105,24 @@ export async function toggleTask(taskId: string, done: boolean) {
     })
     .eq("id", taskId);
 
+  /**
+   * Crédito de moedas pela conclusão.
+   *
+   * A função do banco é idempotente: o extrato tem índice único por fato
+   * gerador ("task:<id>"), então marcar e desmarcar a mesma tarefa repetidas
+   * vezes paga uma vez só. Sem isso, seria trivial fabricar moedas alternando
+   * o toque no mesmo item.
+   *
+   * Ao desmarcar não estornamos: o crédito já foi conquistado, e estornar
+   * abriria caminho para saldo negativo com resgate já feito.
+   */
+  if (done) {
+    await supabase.rpc("award_task_completion", { p_task_id: taskId });
+  }
+
   revalidatePath("/tarefas");
   revalidatePath("/inicio");
+  revalidatePath("/conquistas");
 }
 
 export async function deleteTask(taskId: string) {
