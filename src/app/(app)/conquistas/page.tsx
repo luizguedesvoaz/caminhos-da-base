@@ -3,7 +3,7 @@ import { getActiveAthlete } from "@/lib/athlete";
 import { AthleteHeader } from "@/components/AthleteHeader";
 import { AchievementList } from "@/components/AchievementList";
 import { RewardList } from "@/components/RewardList";
-import { ReferralCard } from "@/components/ReferralCard";
+import { ReferralCard, type ReferralRequest } from "@/components/ReferralCard";
 import { Card } from "@/components/ui";
 import {
   computeAchievements,
@@ -27,7 +27,7 @@ export default async function ConquistasPage() {
     { data: rewards },
     { data: redemptions },
     { data: ledger },
-    { data: referrals },
+    { data: referralRequests },
   ] = await Promise.all([
     supabase.rpc("coin_balance"),
     supabase
@@ -68,7 +68,11 @@ export default async function ConquistasPage() {
       .select("id, amount, description, created_at")
       .order("created_at", { ascending: false })
       .limit(15),
-    supabase.from("referrals").select("id, invite_code, referred_id"),
+    supabase
+      .from("referral_requests")
+      .select("id, family_name, phone, status, created_at")
+      .order("created_at", { ascending: false })
+      .limit(20),
   ]);
 
   const docs = documents ?? [];
@@ -84,7 +88,6 @@ export default async function ConquistasPage() {
 
   const unlocked = achievements.filter((a) => a.unlocked).length;
   const coins = Number(balance ?? 0);
-  const acceptedReferrals = (referrals ?? []).filter((r) => r.referred_id).length;
 
   return (
     <>
@@ -123,7 +126,7 @@ export default async function ConquistasPage() {
 
       <section className="mt-6">
         <h2 className="mb-3 text-sm font-semibold text-navy-900">Indicar</h2>
-        <ReferralCard accepted={acceptedReferrals} />
+        <ReferralCard requests={(referralRequests ?? []) as ReferralRequest[]} />
       </section>
 
       {redemptions && redemptions.length > 0 && (
