@@ -18,38 +18,46 @@ const ICONS = {
 /**
  * Alertas do dashboard. Estado nunca é comunicado só por cor — cada linha traz
  * ícone e texto explícito.
+ *
+ * Nenhum alerta usa ouro, nem o de documento vencendo: no desenho novo o ouro
+ * é exclusivo de dia de jogo. Prazo apertado usa o âmbar de aviso, que é mais
+ * fechado e não se confunde com partida.
  */
 export function AlertsCard({ alerts }: { alerts: Alert[] }) {
   if (alerts.length === 0) return null;
 
   return (
-    <ul className="mb-4 space-y-2">
+    <ul className="mt-5 space-y-2.5">
       {alerts.map((alert) => {
         const Icon = ICONS[alert.icon];
         const urgent = alert.tone === "urgent";
         return (
           <li key={alert.key}>
             <Link
-              href={alert.href} prefetch={false}
-              className={`flex items-center gap-3 rounded-xl p-4 ${
-                urgent ? "bg-red-50" : "bg-amber-50"
+              href={alert.href}
+              prefetch={false}
+              className={`flex items-center gap-3 rounded-[var(--radius-linha)] border-2 p-3.5 ${
+                urgent
+                  ? "border-alerta bg-alerta-fundo"
+                  : "border-aviso bg-aviso-fundo"
               }`}
             >
               <Icon
                 size={20}
-                className={`shrink-0 ${urgent ? "text-red-700" : "text-amber-800"}`}
+                strokeWidth={2.2}
+                className={`shrink-0 ${urgent ? "text-alerta" : "text-aviso"}`}
                 aria-hidden
               />
               <p
-                className={`flex-1 text-sm ${
-                  urgent ? "text-red-800" : "text-amber-900"
+                className={`flex-1 text-[14px] font-medium leading-snug ${
+                  urgent ? "text-alerta-tinta" : "text-aviso-tinta"
                 }`}
               >
                 {alert.text}
               </p>
               <ChevronRight
                 size={18}
-                className={urgent ? "text-red-700" : "text-amber-800"}
+                className={urgent ? "text-alerta" : "text-aviso"}
                 aria-hidden
               />
             </Link>

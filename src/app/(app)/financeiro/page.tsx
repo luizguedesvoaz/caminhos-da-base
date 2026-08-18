@@ -55,7 +55,7 @@ export default async function FinanceiroPage() {
       />
 
       {/* Número-herói: o dado mais compartilhável do produto. */}
-      <Card className="bg-navy-900 text-white">
+      <Card className="bg-marinho-fundo text-white">
         <p className="text-sm text-white/70">Total investido até aqui</p>
         <p className="mt-1 text-[2.75rem] font-bold leading-none tabular-nums">
           {formatCents(totalAllTime)}
@@ -72,10 +72,10 @@ export default async function FinanceiroPage() {
 
       {list.length === 0 ? (
         <Card className="mt-4">
-          <h2 className="font-semibold text-navy-900">
+          <h2 className="font-semibold text-tinta">
             Ainda não há nenhum gasto registrado
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted">
+          <p className="mt-2 text-sm leading-relaxed text-tinta-2">
             Comece pela mensalidade do mês. Em poucas semanas você vai enxergar
             o tamanho real do investimento — e é um número que quase nenhum pai
             sabe de cabeça.
@@ -98,7 +98,7 @@ export default async function FinanceiroPage() {
           </Card>
 
           <section className="mt-6">
-            <h2 className="mb-2 text-sm font-semibold text-navy-900">
+            <h2 className="mb-2 text-sm font-semibold text-tinta">
               Lançamentos
             </h2>
             <ul className="space-y-2">

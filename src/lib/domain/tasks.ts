@@ -137,3 +137,53 @@ export function friendlyDate(iso: string, today: Date = new Date()): string {
     month: "short",
   });
 }
+
+/**
+ * Espelho de `coins_for_category` (migração 0005) — SÓ para exibir o "+20" na
+ * linha da tarefa. O crédito real continua sendo calculado no banco; se os dois
+ * divergirem, quem manda é o banco. Duplicar aqui evita uma ida ao servidor só
+ * para desenhar um número que nunca muda.
+ */
+export const TASK_COINS: Record<TaskCategory, number> = {
+  documentacao: 25,
+  saude: 20,
+  escola: 15,
+  desenvolvimento: 15,
+  treino: 10,
+  jogo: 10,
+};
+
+/**
+ * A semana da cartela: segunda a domingo, no fuso local.
+ *
+ * Segunda como primeiro dia é o que o brasileiro entende por "semana" quando
+ * fala de rotina de treino — e faz o sábado, dia de jogo, cair perto do fim,
+ * que é onde o desenho o coloca.
+ */
+export function weekDays(today: Date = new Date()): Date[] {
+  const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const offset = (base.getDay() + 6) % 7; // 0 = segunda
+  const monday = new Date(base);
+  monday.setDate(base.getDate() - offset);
+
+  return Array.from({ length: 7 }, (_, i) => {
+    const day = new Date(monday);
+    day.setDate(monday.getDate() + i);
+    return day;
+  });
+}
+
+/** "11 a 17 de agosto" — o intervalo da semana em uma linha. */
+export function weekRangeLabel(days: Date[]): string {
+  const [first] = days;
+  const last = days[days.length - 1];
+  const mesIgual = first.getMonth() === last.getMonth();
+  const fmt = (d: Date, comMes: boolean) =>
+    comMes
+      ? d.toLocaleDateString("pt-BR", { day: "numeric", month: "long" })
+      : String(d.getDate());
+  return `${fmt(first, !mesIgual)} a ${fmt(last, true)}`;
+}
+
+/** Iniciais dos dias da cartela, na ordem segunda→domingo. */
+export const WEEK_INITIALS = ["S", "T", "Q", "Q", "S", "S", "D"] as const;

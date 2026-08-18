@@ -73,28 +73,28 @@ export function RewardList({
           return (
             <li
               key={reward.id}
-              className="rounded-xl border border-line bg-white p-3.5"
+              className="rounded-xl border border-contorno bg-fundo p-3.5"
             >
               <div className="flex items-start gap-3">
                 <Icon
                   size={20}
-                  className="mt-0.5 shrink-0 text-navy-900"
+                  className="mt-0.5 shrink-0 text-tinta"
                   aria-hidden
                 />
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm font-semibold text-ink">
+                  <p className="text-sm font-semibold text-tinta">
                     {reward.title}
                   </p>
                   {reward.description && (
-                    <p className="mt-0.5 text-xs leading-relaxed text-muted">
+                    <p className="mt-0.5 text-xs leading-relaxed text-tinta-2">
                       {reward.description}
                     </p>
                   )}
-                  <p className="mt-1.5 text-sm font-semibold tabular-nums text-navy-900">
+                  <p className="mt-1.5 text-sm font-semibold tabular-nums text-tinta">
                     {formatCoins(reward.cost_coins)} moedas
                   </p>
                   {reward.monthly_limit !== null && (
-                    <p className="mt-0.5 text-xs text-muted">
+                    <p className="mt-0.5 text-xs text-tinta-2">
                       {reward.monthly_limit} vagas por mês
                     </p>
                   )}
@@ -111,7 +111,7 @@ export function RewardList({
                     {busyId === reward.id ? "Resgatando…" : "Resgatar"}
                   </Button>
                 ) : (
-                  <p className="rounded-xl bg-navy-50 px-4 py-3 text-center text-sm text-muted">
+                  <p className="rounded-xl bg-fundo-2 px-4 py-3 text-center text-sm text-tinta-2">
                     Faltam {formatCoins(missing)} moedas
                   </p>
                 )}
@@ -122,7 +122,7 @@ export function RewardList({
       </ul>
 
       {rewards.length === 0 && (
-        <p className="rounded-xl border border-line bg-white p-5 text-sm text-muted">
+        <p className="rounded-xl border border-contorno bg-fundo p-5 text-sm text-tinta-2">
           Nenhuma recompensa disponível agora.
         </p>
       )}

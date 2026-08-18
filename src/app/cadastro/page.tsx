@@ -76,8 +76,8 @@ export default function CadastroPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center px-6 py-10">
-      <h1 className="text-2xl font-bold text-navy-900">Criar conta</h1>
-      <p className="mt-2 text-muted">
+      <h1 className="text-2xl font-bold text-tinta">Criar conta</h1>
+      <p className="mt-2 text-tinta-2">
         O {BRAND.name} é fechado por convite. Use o código que você recebeu.
       </p>
 
@@ -129,11 +129,11 @@ export default function CadastroPage() {
             O modelo é opt-out: o atleta entra visível a parceiros e a família
             sai quando quiser. Num arranjo assim, a clareza deste texto no
             momento do cadastro é o que sustenta a escolha. */}
-        <div className="rounded-xl border border-gold-500 bg-gold-500/10 p-4">
-          <p className="text-sm font-semibold text-navy-900">
+        <div className="rounded-xl border border-jogo bg-jogo/10 p-4">
+          <p className="text-sm font-semibold text-tinta">
             Apresentação a clubes e parceiros
           </p>
-          <p className="mt-1.5 text-sm leading-relaxed text-ink">
+          <p className="mt-1.5 text-sm leading-relaxed text-tinta">
             O perfil esportivo do seu atleta — categoria, posição, clube,
             minutos em campo, gols e assistências — poderá ser apresentado a
             clubes, empresários e parceiros da consultoria.{" "}
@@ -142,15 +142,15 @@ export default function CadastroPage() {
           </p>
         </div>
 
-        <label className="flex items-start gap-3 rounded-xl bg-navy-50 p-4">
+        <label className="flex items-start gap-3 rounded-xl bg-fundo-2 p-4">
           <input
             type="checkbox"
             required
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
-            className="mt-0.5 size-5 shrink-0 accent-navy-900"
+            className="mt-0.5 size-5 shrink-0 accent-acento"
           />
-          <span className="text-sm leading-relaxed text-ink">
+          <span className="text-sm leading-relaxed text-tinta">
             Sou responsável legal pelo atleta, li o aviso acima e autorizo o
             tratamento dos dados dele conforme a{" "}
             <Link href="/privacidade" className="underline">
@@ -167,9 +167,9 @@ export default function CadastroPage() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-muted">
+      <p className="mt-6 text-center text-sm text-tinta-2">
         Já tem conta?{" "}
-        <Link href="/entrar" className="font-semibold text-navy-900 underline">
+        <Link href="/entrar" className="font-semibold text-tinta underline">
           Entrar
         </Link>
       </p>

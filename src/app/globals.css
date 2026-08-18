@@ -1,64 +1,215 @@
 @import "tailwindcss";
 
+/* Modo escuro por atributo, não por media query: o claro é o padrão para todo
+   mundo e o escuro só entra quando a pessoa escolhe. Assim `dark:` continua
+   disponível no Tailwind v4 para os casos pontuais. */
+@custom-variant dark (&:where([data-tema="escuro"], [data-tema="escuro"] *));
+
+/* ---------------------------------------------------------------------------
+   Camada 1 — cores cruas da marca. Não usar direto nos componentes.
+   --------------------------------------------------------------------------- */
 @theme {
-  /* Paleta da identidade — ver especificação, seção 1 */
-  --color-navy-50:  #eef0f8;
-  --color-navy-100: #d3d8ec;
-  --color-navy-300: #7a86bb;
-  --color-navy-500: #4a5899;
-  --color-navy-700: #2a3572;
-  --color-navy-900: #1e2761;
+  --color-limao:   oklch(.86 .19 128);
+  --color-ouro:    #ffc72c;
+  --color-marinho: #1e2761;
+  --color-preto:   #101010;
+  --color-creme:   #fdfdf8;
+  --color-osso:    #f2f2ea;
 
-  --color-gold-300: #ffe08a;
-  --color-gold-400: #ffd45c;
-  --color-gold-500: #ffc72c;
-  --color-gold-600: #e0a800;
+  /* As fontes são carregadas por @fontsource no layout: self-host, nenhum
+     request externo em runtime, e funciona em rede móvel ruim. */
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
 
-  --color-ink:   #14183a;
-  --color-muted: #6b7280;
-  --color-line:  #e5e7eb;
-
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    Arial, sans-serif;
+  --radius-bloco: 20px;
+  --radius-card: 18px;
+  --radius-linha: 16px;
+  --radius-caixa: 10px;
+  --radius-selecao: 8px;
 }
 
-:root {
+/* ---------------------------------------------------------------------------
+   Camada 2 — tokens semânticos. É o que os componentes consomem.
+   `@theme inline` registra as utilidades (bg-fundo, text-tinta, border-contorno…)
+   apontando para variáveis que trocam em runtime.
+   --------------------------------------------------------------------------- */
+@theme inline {
+  --color-fundo: var(--fundo);
+  --color-fundo-2: var(--fundo-2);
+  --color-tinta: var(--tinta);
+  --color-tinta-2: var(--tinta-2);
+  --color-tinta-3: var(--tinta-3);
+  --color-contorno: var(--contorno);
+  --color-contorno-forte: var(--contorno-forte);
+  --color-acento: var(--acento);
+  --color-acento-tinta: var(--acento-tinta);
+  --color-acento-fundo: var(--acento-fundo);
+  --color-acento-texto: var(--acento-texto);
+  --color-jogo: var(--jogo);
+  --color-jogo-tinta: var(--jogo-tinta);
+  --color-jogo-tinta-2: var(--jogo-tinta-2);
+  --color-marinho-fundo: var(--marinho-fundo);
+  --color-marinho-tinta: var(--marinho-tinta);
+  --color-alerta: var(--alerta);
+  --color-alerta-fundo: var(--alerta-fundo);
+  --color-alerta-tinta: var(--alerta-tinta);
+  --color-ok: var(--ok);
+  --color-ok-fundo: var(--ok-fundo);
+  --color-ok-tinta: var(--ok-tinta);
+  --color-aviso: var(--aviso);
+  --color-aviso-fundo: var(--aviso-fundo);
+  --color-aviso-tinta: var(--aviso-tinta);
+
+  /* --------------------------------------------------------------------
+     Ponte para as telas ainda não redesenhadas (Financeiro, Conquistas,
+     Documentos, painel do consultor). Elas usam as cores de estado do
+     Tailwind direto; redefinindo esses tons aqui, herdam os dois temas
+     sem precisar tocar em cada arquivo. Some quando o redesenho chegar
+     nessas telas.
+     -------------------------------------------------------------------- */
+  --color-red-50: var(--alerta-fundo);
+  --color-red-100: var(--alerta-fundo);
+  --color-red-600: var(--alerta);
+  --color-red-700: var(--alerta-tinta);
+  --color-red-800: var(--alerta-tinta);
+  --color-emerald-50: var(--ok-fundo);
+  --color-emerald-700: var(--ok);
+  --color-emerald-800: var(--ok-tinta);
+  --color-emerald-900: var(--ok-tinta);
+  --color-amber-50: var(--aviso-fundo);
+  --color-amber-300: var(--aviso);
+  --color-amber-800: var(--aviso-tinta);
+  --color-amber-900: var(--aviso-tinta);
+}
+
+/* Tema claro — o padrão. Sem cookie, é isto que renderiza. */
+:root,
+[data-tema="claro"] {
   color-scheme: light;
+
+  --fundo: #fdfdf8;
+  --fundo-2: #f1efe4;
+  --tinta: #101010;
+  --tinta-2: #5a5f73;
+  --tinta-3: #8a8fa3;
+  --contorno: #101010;
+  --contorno-forte: #101010;
+  --acento: oklch(.86 .19 128);
+  --acento-tinta: #101010;
+  --acento-fundo: #eef8d8;
+  /* O limão puro sobre o creme dá ~1.4:1 de contraste — ilegível. Quando o
+     acento precisa ser TEXTO sobre o fundo (a moeda "+20", um número em
+     destaque), o claro usa esta versão fechada; o escuro mantém o limão,
+     que ali é o pico luminoso da tela. */
+  --acento-texto: #4f7a00;
+  --jogo: #ffc72c;
+  --jogo-tinta: #101010;
+  --jogo-tinta-2: #7a5c00;
+  --marinho-fundo: #1e2761;
+  --marinho-tinta: #ffffff;
+  --alerta: #a32020;
+  --alerta-fundo: #ffe8e8;
+  --alerta-tinta: #7a1414;
+  --ok: #5a8a00;
+  --ok-fundo: #eef8d8;
+  --ok-tinta: #3f6100;
+
+  /* Aviso ≠ jogo: o ouro #FFC72C é exclusivo de partida, então o alerta
+     brando de documento/prazo usa um âmbar mais fechado e não compete. */
+  --aviso: #b8860b;
+  --aviso-fundo: #fdf3d9;
+  --aviso-tinta: #6b4e00;
+
+  --sombra-bloco: 4px 4px 0 var(--tinta);
+  --sombra-heroi: 6px 6px 0 var(--tinta);
+  --sombra-flutuante: 4px 4px 0 var(--tinta);
+}
+
+/* Tema escuro — o contorno recua e o limão vira luz. */
+[data-tema="escuro"] {
+  color-scheme: dark;
+
+  --fundo: #101010;
+  --fundo-2: #161616;
+  --tinta: #f2f2ea;
+  --tinta-2: rgb(242 242 234 / .55);
+  --tinta-3: rgb(242 242 234 / .38);
+  --contorno: rgb(242 242 234 / .18);
+  --contorno-forte: #f2f2ea;
+  --acento: oklch(.86 .19 128);
+  --acento-tinta: #101010;
+  --acento-fundo: rgb(184 230 0 / .12);
+  --acento-texto: oklch(.86 .19 128);
+  --jogo: #ffc72c;
+  --jogo-tinta: #101010;
+  --jogo-tinta-2: #7a5c00;
+  --marinho-fundo: #1e2761;
+  --marinho-tinta: #ffffff;
+  --alerta: #ff6b6b;
+  --alerta-fundo: rgb(255 107 107 / .12);
+  --alerta-tinta: #ffd9d9;
+  --ok: oklch(.86 .19 128);
+  --ok-fundo: rgb(184 230 0 / .12);
+  --ok-tinta: oklch(.86 .19 128);
+
+  --aviso: #e3b341;
+  --aviso-fundo: rgb(227 179 65 / .12);
+  --aviso-tinta: #f5dfa8;
+
+  --sombra-bloco: 4px 4px 0 rgb(184 230 0 / .22);
+  --sombra-heroi: 6px 6px 0 rgb(184 230 0 / .28);
+  --sombra-flutuante: 0 12px 26px -8px rgb(184 230 0 / .5);
 }
 
 body {
   font-family: var(--font-sans);
-  background: #f7f8fc;
-  color: var(--color-ink);
+  background: var(--color-fundo);
+  color: var(--color-tinta);
   -webkit-font-smoothing: antialiased;
-  /* Respeita a área segura do iPhone — o app é mobile-first e instalável */
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Impede o zoom automático do Safari ao focar um campo no celular */
+/* Impede o zoom automático do Safari ao focar um campo no celular. */
 input,
 select,
 textarea {
   font-size: 16px;
 }
 
+/* Foco sempre visível — o desenho é de alto contraste, o foco também. */
+:where(a, button, [role="button"], input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-contorno-forte);
+  outline-offset: 2px;
+}
+
+/* Números sempre alinhados: minutagem, moedas, dinheiro. */
+.tabular,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
 @keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .animate-rise {
-  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: rise .5s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+/* A única animação celebratória do app: a divisa nova que acende. */
+@keyframes acender {
+  from { opacity: 0; transform: scale(1.06); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.animate-acender {
+  animation: acender .32s cubic-bezier(.22, 1, .36, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-rise {
-    animation: none;
-  }
+  .animate-rise,
+  .animate-acender { animation: none; }
+  *, *::before, *::after { transition-duration: 0s !important; }
 }

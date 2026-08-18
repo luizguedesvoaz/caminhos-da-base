@@ -2,47 +2,78 @@ import { STEPS, type Step } from "@/lib/domain/pyramid";
 
 /**
  * A pirâmide de 3 níveis — elemento visual mais forte do produto.
- * O degrau atual acende em dourado; os demais ficam apagados.
+ *
+ * As lajes têm LARGURA IGUAL. A largura variável do desenho antigo saiu: com
+ * três degraus só, o triângulo lia como "o topo é menor", quando a mensagem é
+ * "o topo é mais alto". A hierarquia agora é altura + cor, que é o que a
+ * pessoa realmente compara.
  */
 export function Pyramid({
   step,
-  size = "large",
+  tamanho = "comprimida",
+  motivo,
 }: {
   step: Step;
-  size?: "large" | "small";
+  /** `comprimida` é o bloco do Início; `revelacao` é a tela do resultado. */
+  tamanho?: "comprimida" | "revelacao";
+  /** Texto do porquê, exibido dentro da laje ativa na tela de revelação. */
+  motivo?: string | null;
 }) {
-  const levels: { level: Step; width: string }[] = [
-    { level: 3, width: "42%" },
-    { level: 2, width: "70%" },
-    { level: 1, width: "100%" },
-  ];
+  const grande = tamanho === "revelacao";
+  const alturaInativa = grande ? 54 : 13;
+  const alturaAtiva = grande ? 88 : 30;
 
-  const height = size === "large" ? "h-14" : "h-8";
-  const gap = size === "large" ? "gap-1.5" : "gap-1";
+  const niveis: Step[] = [3, 2, 1];
 
   return (
     <div
-      className={`flex w-full flex-col items-center ${gap}`}
+      className="flex w-full flex-col gap-2"
       role="img"
       aria-label={`Degrau ${step} de 3: ${STEPS[step].name}`}
     >
-      {levels.map(({ level, width }, index) => {
-        const active = level === step;
+      {niveis.map((nivel, index) => {
+        const ativo = nivel === step;
+        const concluido = nivel < step;
+
         return (
           <div
-            key={level}
-            style={{ width, animationDelay: `${index * 90}ms` }}
+            key={nivel}
+            style={{
+              minHeight: ativo ? alturaAtiva : alturaInativa,
+              animationDelay: `${index * 90}ms`,
+              transform: ativo ? "rotate(-.6deg)" : undefined,
+            }}
             className={[
-              height,
-              "animate-rise flex items-center justify-center rounded-md transition-colors",
-              active
-                ? "bg-gold-500 text-navy-900 shadow-lg shadow-gold-500/30"
-                : "bg-navy-900/15 text-navy-900/50",
+              "animate-rise flex items-center rounded-[var(--radius-linha)] border-2 px-3",
+              ativo
+                ? "border-contorno bg-acento text-acento-tinta shadow-[var(--sombra-heroi)]"
+                : concluido
+                  ? "border-contorno bg-tinta/25 text-tinta"
+                  : "border-contorno bg-transparent text-tinta-3",
+              grande ? "py-2" : "",
             ].join(" ")}
           >
-            {size === "large" && (
-              <span className="px-2 text-center text-xs font-semibold leading-tight">
-                {STEPS[level].name}
+            {grande && (
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline gap-2">
+                  <span className="font-display text-[22px] font-extrabold leading-none tracking-[-.03em]">
+                    {nivel}
+                  </span>
+                  <span className="text-[13px] font-bold">
+                    {STEPS[nivel].name}
+                  </span>
+                </div>
+                {ativo && motivo && (
+                  <p className="mt-1 text-[13px] leading-snug text-acento-tinta/80">
+                    {motivo}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {!grande && (
+              <span className="sr-only">
+                {nivel} — {STEPS[nivel].name}
               </span>
             )}
           </div>

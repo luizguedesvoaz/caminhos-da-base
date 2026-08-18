@@ -10,12 +10,12 @@ export default function LandingPage() {
           <Pyramid step={3} />
         </div>
 
-        <h1 className="text-3xl font-bold leading-tight text-navy-900">
+        <h1 className="text-3xl font-bold leading-tight text-tinta">
           {BRAND.name}
         </h1>
-        <p className="mt-3 text-lg text-muted">{BRAND.tagline}</p>
+        <p className="mt-3 text-lg text-tinta-2">{BRAND.tagline}</p>
 
-        <p className="mt-6 leading-relaxed text-ink">
+        <p className="mt-6 leading-relaxed text-tinta">
           A formação de um atleta tem três degraus — iniciação, competições e
           alto rendimento. Aqui você vê em qual deles seu filho está, o que
           falta para o próximo, e organiza treino, escola, saúde e custos num

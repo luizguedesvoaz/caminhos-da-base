@@ -1,19 +1,67 @@
 {
   "name": "Caminhos da Base",
   "short_name": "Caminhos",
-  "description": "A carreira do seu atleta, degrau por degrau.",
-  "start_url": "/inicio",
-  "display": "standalone",
-  "background_color": "#F7F8FC",
-  "theme_color": "#1E2761",
-  "orientation": "portrait",
+  "description": "O caminho do seu atleta na base, degrau por degrau.",
   "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "/inicio",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FDFDF8",
+  "theme_color": "#FDFDF8",
   "icons": [
     {
-      "src": "/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "/icons/icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icone-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icone-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icone-1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Semana",
+      "url": "/tarefas",
+      "icons": [
+        {
+          "src": "/icons/icone-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Registrar jogo",
+      "url": "/temporada",
+      "icons": [
+        {
+          "src": "/icons/icone-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

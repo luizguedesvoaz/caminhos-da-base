@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Caminhos da Base">
+  <rect width="512" height="512" fill="#fdfdf8"></rect>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M148 236 L256 128 L364 236" stroke="#101010" stroke-width="62"></path>
+    <path d="M148 236 L256 128 L364 236" stroke="oklch(.86 .19 128)" stroke-width="40"></path>
+    <path d="M148 328 L256 220 L364 328" stroke="#101010" stroke-opacity=".18" stroke-width="46"></path>
+    <path d="M148 420 L256 312 L364 420" stroke="#101010" stroke-opacity=".18" stroke-width="46"></path>
+  </g>
+</svg>

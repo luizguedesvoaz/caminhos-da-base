@@ -31,7 +31,7 @@ export function ExpenseChart({
 
   return (
     <figure className="m-0">
-      <figcaption className="mb-3 text-sm font-semibold text-navy-900">
+      <figcaption className="mb-3 text-sm font-semibold text-tinta">
         Onde o dinheiro foi
       </figcaption>
 
@@ -41,22 +41,22 @@ export function ExpenseChart({
           return (
             <li key={category}>
               <div className="mb-1 flex items-baseline justify-between gap-3">
-                <span className="text-sm text-ink">
+                <span className="text-sm text-tinta">
                   {EXPENSE_CATEGORIES[category].label}
                 </span>
-                <span className="shrink-0 text-sm font-semibold tabular-nums text-ink">
+                <span className="shrink-0 text-sm font-semibold tabular-nums text-tinta">
                   {formatCents(cents)}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 {/* Trilha recessiva; barra em matiz única, ponta arredondada */}
-                <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-navy-900/8">
+                <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-tinta/10">
                   <div
-                    className="h-full rounded-full bg-navy-700"
+                    className="h-full rounded-full bg-acento"
                     style={{ width: `${Math.max((cents / max) * 100, 3)}%` }}
                   />
                 </div>
-                <span className="w-9 shrink-0 text-right text-xs tabular-nums text-muted">
+                <span className="w-9 shrink-0 text-right text-xs tabular-nums text-tinta-2">
                   {share}%
                 </span>
               </div>
@@ -80,7 +80,7 @@ export function MonthlyChart({
 
   return (
     <figure className="m-0">
-      <figcaption className="mb-3 text-sm font-semibold text-navy-900">
+      <figcaption className="mb-3 text-sm font-semibold text-tinta">
         Gasto por mês
       </figcaption>
       {/* As barras são filhas DIRETAS de um container com altura definida (h-28).
@@ -104,7 +104,7 @@ export function MonthlyChart({
         {months.map((m) => (
           <span
             key={m.label}
-            className="flex-1 text-center text-[10px] text-muted"
+            className="flex-1 text-center text-[10px] text-tinta-2"
           >
             {m.label}
           </span>

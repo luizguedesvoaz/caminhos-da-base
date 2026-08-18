@@ -56,11 +56,11 @@ export function AthleteExplorer({
 
   return (
     <>
-      <div className="rounded-2xl border border-line bg-white p-4">
+      <div className="rounded-2xl border border-contorno bg-fundo p-4">
         <div className="relative">
           <Search
             size={18}
-            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted"
+            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-tinta-2"
             aria-hidden
           />
           <input
@@ -70,13 +70,13 @@ export function AthleteExplorer({
             }
             placeholder="Buscar por nome, clube, posição, responsável, ano…"
             aria-label="Buscar atletas"
-            className="w-full rounded-xl border border-line bg-white py-3 pl-11 pr-10 text-ink outline-none transition-colors focus:border-navy-500 focus:ring-2 focus:ring-navy-500/20"
+            className="w-full rounded-xl border border-contorno bg-fundo py-3 pl-11 pr-10 text-tinta outline-none transition-colors focus:border-contorno-forte focus:ring-2 focus:ring-contorno-forte/20"
           />
           {filters.query && (
             <button
               onClick={() => setFilters((f) => ({ ...f, query: "" }))}
               aria-label="Limpar busca"
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-tinta-2"
             >
               <X size={18} aria-hidden />
             </button>
@@ -152,7 +152,7 @@ export function AthleteExplorer({
         {hasFilters && (
           <button
             onClick={() => setFilters(EMPTY_FILTERS)}
-            className="mt-3 text-xs text-navy-900 underline"
+            className="mt-3 text-xs text-tinta underline"
           >
             Limpar tudo
           </button>
@@ -160,26 +160,26 @@ export function AthleteExplorer({
       </div>
 
       {/* Resumo da seleção: responde "o que eu tenho em mãos agora". */}
-      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl bg-navy-50 px-4 py-3 text-sm">
-        <span className="font-semibold text-navy-900">
+      <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl bg-fundo-2 px-4 py-3 text-sm">
+        <span className="font-semibold text-tinta">
           {summary.count}{" "}
           {summary.count === 1 ? "atleta" : "atletas"}
         </span>
-        <span className="text-muted">
-          <strong className="tabular-nums text-ink">{summary.goals}</strong> gols
+        <span className="text-tinta-2">
+          <strong className="tabular-nums text-tinta">{summary.goals}</strong> gols
         </span>
-        <span className="text-muted">
-          <strong className="tabular-nums text-ink">{summary.assists}</strong>{" "}
+        <span className="text-tinta-2">
+          <strong className="tabular-nums text-tinta">{summary.assists}</strong>{" "}
           assistências
         </span>
-        <span className="text-muted">
-          <strong className="tabular-nums text-ink">
+        <span className="text-tinta-2">
+          <strong className="tabular-nums text-tinta">
             {formatMinutes(summary.minutes)}
           </strong>{" "}
           em campo
         </span>
         {summary.hidden > 0 && (
-          <span className="flex items-center gap-1.5 text-muted">
+          <span className="flex items-center gap-1.5 text-tinta-2">
             <EyeOff size={14} aria-hidden />
             {summary.hidden} fora da vitrine
           </span>
@@ -193,8 +193,8 @@ export function AthleteExplorer({
             onClick={() => setSortKey(key)}
             className={`rounded-full px-3 py-1.5 text-xs font-medium ${
               key === sortKey
-                ? "bg-navy-900 text-white"
-                : "border border-line bg-white text-muted"
+                ? "bg-marinho-fundo text-white"
+                : "border border-contorno bg-fundo text-tinta-2"
             }`}
           >
             {SORT_LABELS[key]}
@@ -218,7 +218,7 @@ function FilterRow({
 }) {
   return (
     <div className="flex flex-wrap items-center gap-1.5">
-      <span className="w-16 shrink-0 text-xs font-medium text-muted">
+      <span className="w-16 shrink-0 text-xs font-medium text-tinta-2">
         {label}
       </span>
       {children}
@@ -241,8 +241,8 @@ function Chip({
       aria-pressed={active}
       className={`rounded-full px-2.5 py-1 text-xs font-medium transition-colors ${
         active
-          ? "bg-navy-900 text-white"
-          : "border border-line bg-white text-muted hover:border-navy-300"
+          ? "bg-marinho-fundo text-white"
+          : "border border-contorno bg-fundo text-tinta-2 hover:border-contorno"
       }`}
     >
       {children}

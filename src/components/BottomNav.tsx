@@ -9,13 +9,16 @@ import { Home, ListChecks, Trophy, Wallet, Medal } from "lucide-react";
  * entra no lugar de Perfil, que passa a ser alcançado pelo nome do atleta no
  * topo — gamificação precisa estar visível para funcionar, perfil é consultado
  * uma vez e esquecido.
+ *
+ * Os rótulos são os do desenho novo: "Semana" em vez de "Tarefas" (o que a
+ * pessoa fecha é a semana, não uma lista) e "Custo" em vez de "Gastos".
  */
 const ITEMS = [
   { href: "/inicio", label: "Início", Icon: Home },
-  { href: "/tarefas", label: "Tarefas", Icon: ListChecks },
+  { href: "/tarefas", label: "Semana", Icon: ListChecks },
   { href: "/temporada", label: "Temporada", Icon: Trophy },
-  { href: "/financeiro", label: "Gastos", Icon: Wallet },
-  { href: "/conquistas", label: "Conquistas", Icon: Medal },
+  { href: "/financeiro", label: "Custo", Icon: Wallet },
+  { href: "/conquistas", label: "Selos", Icon: Medal },
 ];
 
 export function BottomNav() {
@@ -24,7 +27,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Navegação principal"
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 backdrop-blur"
+      className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-contorno bg-fundo-2"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <ul className="mx-auto flex max-w-md">
@@ -40,12 +43,22 @@ export function BottomNav() {
                    compensa o risco. */
                 prefetch={false}
                 aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-1 py-2.5 text-[11px] font-medium transition-colors ${
-                  active ? "text-navy-900" : "text-muted"
-                }`}
+                className="flex min-h-11 flex-col items-center gap-1 py-2"
               >
-                <Icon size={21} strokeWidth={active ? 2.4 : 1.8} aria-hidden />
-                {label}
+                <span
+                  className={`flex h-[26px] w-9 items-center justify-center rounded-[9px] transition-colors ${
+                    active ? "bg-acento text-acento-tinta" : "text-tinta-2"
+                  }`}
+                >
+                  <Icon size={18} strokeWidth={2} aria-hidden />
+                </span>
+                <span
+                  className={`text-[11px] font-bold ${
+                    active ? "text-tinta dark:text-acento" : "text-tinta-2"
+                  }`}
+                >
+                  {label}
+                </span>
               </Link>
             </li>
           );

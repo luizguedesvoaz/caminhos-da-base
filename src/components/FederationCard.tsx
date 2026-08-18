@@ -50,22 +50,22 @@ export function FederationCard({
     <>
       <Card>
         <div className="flex items-start gap-3">
-          <ShieldAlert size={20} className="mt-0.5 shrink-0 text-navy-900" aria-hidden />
+          <ShieldAlert size={20} className="mt-0.5 shrink-0 text-tinta" aria-hidden />
           <div className="min-w-0 flex-1">
-            <h2 className="font-semibold text-navy-900">
+            <h2 className="font-semibold text-tinta">
               Vínculo federativo {season}
             </h2>
 
             {current ? (
               <>
-                <p className="mt-1 text-sm text-ink">
+                <p className="mt-1 text-sm text-tinta">
                   Inscrito pela {current.federation} pelo {current.club_name}.
                 </p>
                 {window && (
                   <p
                     className={`mt-2 rounded-lg px-3 py-2 text-sm ${
                       window.status === "vencido"
-                        ? "bg-navy-50 text-navy-900"
+                        ? "bg-fundo-2 text-tinta"
                         : window.status === "vencendo"
                           ? "bg-amber-50 text-amber-900"
                           : "bg-emerald-50 text-emerald-800"
@@ -78,21 +78,21 @@ export function FederationCard({
                         : `Janela de transferência aberta por mais ${window.days} dias.`}
                   </p>
                 )}
-                <p className="mt-2 text-xs leading-relaxed text-muted">
+                <p className="mt-2 text-xs leading-relaxed text-tinta-2">
                   A inscrição na federação vincula o atleta ao clube durante a
                   temporada. É o detalhe que mais pega famílias de surpresa.
                 </p>
               </>
             ) : (
               <>
-                <p className="mt-1 text-sm leading-relaxed text-muted">
+                <p className="mt-1 text-sm leading-relaxed text-tinta-2">
                   Seu atleta foi inscrito em alguma federação nesta temporada?
                   Registrar aqui garante o aviso antes de a janela de
                   transferência fechar.
                 </p>
                 <button
                   onClick={() => setOpen(true)}
-                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-navy-900 underline"
+                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-tinta underline"
                 >
                   <Plus size={14} aria-hidden />
                   Registrar inscrição
@@ -105,13 +105,13 @@ export function FederationCard({
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-end bg-black/40">
-          <div className="max-h-[88dvh] w-full overflow-y-auto rounded-t-2xl bg-white p-5">
+          <div className="max-h-[88dvh] w-full overflow-y-auto rounded-t-2xl bg-fundo p-5">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-bold text-navy-900">
+              <h2 className="text-lg font-bold text-tinta">
                 Inscrição na federação
               </h2>
               <button onClick={() => setOpen(false)} aria-label="Fechar">
-                <X size={22} className="text-muted" aria-hidden />
+                <X size={22} className="text-tinta-2" aria-hidden />
               </button>
             </div>
 

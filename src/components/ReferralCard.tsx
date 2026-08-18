@@ -27,7 +27,7 @@ const STATUS_LABEL: Record<
   },
   aprovada: {
     text: "Aprovada — consultor vai entrar em contato",
-    className: "bg-navy-50 text-navy-900",
+    className: "bg-fundo-2 text-tinta",
     Icon: Check,
   },
   convertida: {
@@ -82,10 +82,10 @@ export function ReferralCard({
   return (
     <Card>
       <div className="flex items-start gap-3">
-        <UserPlus size={20} className="mt-0.5 shrink-0 text-navy-900" aria-hidden />
+        <UserPlus size={20} className="mt-0.5 shrink-0 text-tinta" aria-hidden />
         <div className="min-w-0 flex-1">
-          <h3 className="font-semibold text-navy-900">Indicar outra família</h3>
-          <p className="mt-1 text-sm leading-relaxed text-muted">
+          <h3 className="font-semibold text-tinta">Indicar outra família</h3>
+          <p className="mt-1 text-sm leading-relaxed text-tinta-2">
             Conhece uma família que se beneficiaria do app? Envie o contato que o
             consultor fala com ela e envia o convite. Quando a família entrar,
             você recebe 300 moedas.
@@ -105,11 +105,11 @@ export function ReferralCard({
               {requests.map((request) => {
                 const meta = STATUS_LABEL[request.status] ?? STATUS_LABEL.pendente;
                 return (
-                  <li key={request.id} className="rounded-lg border border-line p-3">
-                    <p className="text-sm font-medium text-ink">
+                  <li key={request.id} className="rounded-lg border border-contorno p-3">
+                    <p className="text-sm font-medium text-tinta">
                       {request.family_name}
                     </p>
-                    <p className="text-xs text-muted">{maskPhone(request.phone)}</p>
+                    <p className="text-xs text-tinta-2">{maskPhone(request.phone)}</p>
                     <span
                       className={`mt-1.5 inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${meta.className}`}
                     >
@@ -163,7 +163,7 @@ export function ReferralCard({
 
               {/* Exigência de LGPD: o telefone é dado de terceiro. Sem esta
                   confirmação a solicitação é recusada pelo próprio banco. */}
-              <label className="flex items-start gap-3 rounded-xl bg-navy-50 p-3.5">
+              <label className="flex items-start gap-3 rounded-xl bg-fundo-2 p-3.5">
                 <input
                   type="checkbox"
                   name="consent"
@@ -171,9 +171,9 @@ export function ReferralCard({
                   required
                   checked={consent}
                   onChange={(e) => setConsent(e.target.checked)}
-                  className="mt-0.5 size-5 shrink-0 accent-navy-900"
+                  className="mt-0.5 size-5 shrink-0 accent-acento"
                 />
-                <span className="text-sm leading-relaxed text-ink">
+                <span className="text-sm leading-relaxed text-tinta">
                   Confirmo que avisei essa família e que ela autorizou o contato
                   do consultor.
                 </span>

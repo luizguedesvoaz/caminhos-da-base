@@ -51,30 +51,30 @@ export default async function PainelPage({
           prefetch={false}
           className={`rounded-2xl border p-5 ${
             (s.pending_entries ?? 0) > 0
-              ? "border-gold-500 bg-gold-500/10"
-              : "border-line bg-white"
+              ? "border-jogo bg-jogo/10"
+              : "border-contorno bg-fundo"
           }`}
         >
-          <p className="text-sm text-muted">Entradas aguardando</p>
-          <p className="mt-1 text-3xl font-bold tabular-nums text-navy-900">
+          <p className="text-sm text-tinta-2">Entradas aguardando</p>
+          <p className="mt-1 text-3xl font-bold tabular-nums text-tinta">
             {s.pending_entries ?? 0}
           </p>
           {(s.pending_entries ?? 0) > 0 && (
-            <p className="mt-1 text-xs font-medium text-gold-600">
+            <p className="mt-1 text-xs font-medium text-jogo-tinta-2">
               Tratar agora
             </p>
           )}
         </Link>
 
-        <div className="rounded-2xl border border-line bg-white p-5">
-          <p className="flex items-center gap-1.5 text-sm text-muted">
+        <div className="rounded-2xl border border-contorno bg-fundo p-5">
+          <p className="flex items-center gap-1.5 text-sm text-tinta-2">
             <Users size={14} aria-hidden />
             Atletas
           </p>
-          <p className="mt-1 text-3xl font-bold tabular-nums text-navy-900">
+          <p className="mt-1 text-3xl font-bold tabular-nums text-tinta">
             {s.athletes ?? 0}
           </p>
-          <p className="mt-1 text-xs text-muted">
+          <p className="mt-1 text-xs text-tinta-2">
             {s.families ?? 0} {s.families === 1 ? "família" : "famílias"}
             {(s.blocked ?? 0) > 0 && ` · ${s.blocked} pausada(s)`}
           </p>
@@ -84,34 +84,34 @@ export default async function PainelPage({
           href="/painel?filtro=sumidos&ordem=sumidos"
           prefetch={false}
           className={`rounded-2xl border p-5 ${
-            slipping > 0 ? "border-amber-300 bg-amber-50" : "border-line bg-white"
+            slipping > 0 ? "border-amber-300 bg-amber-50" : "border-contorno bg-fundo"
           }`}
         >
-          <p className="flex items-center gap-1.5 text-sm text-muted">
+          <p className="flex items-center gap-1.5 text-sm text-tinta-2">
             <AlertTriangle size={14} aria-hidden />
             Escapando
           </p>
-          <p className="mt-1 text-3xl font-bold tabular-nums text-navy-900">
+          <p className="mt-1 text-3xl font-bold tabular-nums text-tinta">
             {slipping}
           </p>
-          <p className="mt-1 text-xs text-muted">Sem uso há 14 dias ou mais</p>
+          <p className="mt-1 text-xs text-tinta-2">Sem uso há 14 dias ou mais</p>
         </Link>
 
-        <div className="rounded-2xl border border-line bg-white p-5">
-          <p className="flex items-center gap-1.5 text-sm text-muted">
+        <div className="rounded-2xl border border-contorno bg-fundo p-5">
+          <p className="flex items-center gap-1.5 text-sm text-tinta-2">
             <TrendingUp size={14} aria-hidden />
             Investido pelas famílias
           </p>
-          <p className="mt-1 text-2xl font-bold tabular-nums text-navy-900">
+          <p className="mt-1 text-2xl font-bold tabular-nums text-tinta">
             {formatCents(Number(s.invested_cents ?? 0))}
           </p>
-          <p className="mt-1 text-xs text-muted">Soma de todos os atletas</p>
+          <p className="mt-1 text-xs text-tinta-2">Soma de todos os atletas</p>
         </div>
       </div>
 
       {/* Distribuição na pirâmide: a fotografia da sua base de clientes. */}
-      <div className="mt-4 rounded-2xl border border-line bg-white p-5">
-        <h2 className="text-sm font-semibold text-navy-900">
+      <div className="mt-4 rounded-2xl border border-contorno bg-fundo p-5">
+        <h2 className="text-sm font-semibold text-tinta">
           Distribuição na pirâmide
         </h2>
         <div className="mt-3 space-y-2.5">
@@ -124,14 +124,14 @@ export default async function PainelPage({
             return (
               <div key={row.label}>
                 <div className="mb-1 flex items-baseline justify-between gap-3 text-sm">
-                  <span className="text-ink">{row.label}</span>
-                  <span className="font-semibold tabular-nums text-ink">
+                  <span className="text-tinta">{row.label}</span>
+                  <span className="font-semibold tabular-nums text-tinta">
                     {row.value}
                   </span>
                 </div>
-                <div className="h-2.5 overflow-hidden rounded-full bg-navy-900/8">
+                <div className="h-2.5 overflow-hidden rounded-full bg-tinta/10">
                   <div
-                    className="h-full rounded-full bg-navy-700"
+                    className="h-full rounded-full bg-acento"
                     style={{ width: `${Math.max((row.value / total) * 100, 1)}%` }}
                   />
                 </div>
@@ -159,7 +159,7 @@ export default async function PainelPage({
       )}
 
       <section className="mt-6">
-        <h2 className="mb-3 text-sm font-semibold text-navy-900">
+        <h2 className="mb-3 text-sm font-semibold text-tinta">
           Buscar atletas
         </h2>
         <AthleteExplorer athletes={athletes} />

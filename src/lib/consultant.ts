@@ -93,7 +93,7 @@ export const ENGAGEMENT_STYLE: Record<
   ativo: { label: "Ativo", className: "bg-emerald-50 text-emerald-800" },
   esfriando: { label: "Esfriando", className: "bg-amber-50 text-amber-900" },
   sumido: { label: "Sumido", className: "bg-red-50 text-red-800" },
-  novo: { label: "Recém-cadastrado", className: "bg-navy-50 text-navy-900" },
+  novo: { label: "Recém-cadastrado", className: "bg-fundo-2 text-tinta" },
 };
 
 export type SortKey =

@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useRef, useState } from "react";
-import { Plus, X } from "lucide-react";
+import { X } from "lucide-react";
 import {
   createExpense,
   type ExpenseState,
@@ -12,6 +12,7 @@ import {
 } from "@/lib/domain/expenses";
 import { toISODate } from "@/lib/domain/tasks";
 import { Button, ErrorMessage, Field, inputClass } from "@/components/ui";
+import { BotaoFlutuante } from "@/components/BotaoFlutuante";
 
 /**
  * Meta de UX: lançar um gasto em menos de 30 segundos.
@@ -35,23 +36,19 @@ export function NewExpenseForm({ athleteId }: { athleteId: string }) {
 
   if (!open) {
     return (
-      <button
-        onClick={() => setOpen(true)}
-        className="fixed bottom-20 left-1/2 z-30 flex -translate-x-1/2 items-center gap-2 rounded-full bg-navy-900 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-navy-900/25"
-      >
-        <Plus size={18} aria-hidden />
+      <BotaoFlutuante onClick={() => setOpen(true)}>
         Lançar gasto
-      </button>
+      </BotaoFlutuante>
     );
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-end bg-black/40">
-      <div className="max-h-[88dvh] w-full overflow-y-auto rounded-t-2xl bg-white p-5">
+      <div className="max-h-[88dvh] w-full overflow-y-auto rounded-t-[24px] border-t-2 border-contorno bg-fundo p-5">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-navy-900">Lançar gasto</h2>
+          <h2 className="text-lg font-bold text-tinta">Lançar gasto</h2>
           <button onClick={() => setOpen(false)} aria-label="Fechar">
-            <X size={22} className="text-muted" aria-hidden />
+            <X size={22} className="text-tinta-2" aria-hidden />
           </button>
         </div>
 

@@ -41,17 +41,17 @@ export function ScoutingToggle({
     <Card className="mt-4">
       <div className="flex items-start gap-3">
         {isVisible ? (
-          <Eye size={20} className="mt-0.5 shrink-0 text-navy-900" aria-hidden />
+          <Eye size={20} className="mt-0.5 shrink-0 text-tinta" aria-hidden />
         ) : (
-          <EyeOff size={20} className="mt-0.5 shrink-0 text-muted" aria-hidden />
+          <EyeOff size={20} className="mt-0.5 shrink-0 text-tinta-2" aria-hidden />
         )}
 
         <div className="min-w-0 flex-1">
-          <h2 className="font-semibold text-navy-900">
+          <h2 className="font-semibold text-tinta">
             Apresentação a clubes e parceiros
           </h2>
 
-          <p className="mt-2 text-sm leading-relaxed text-muted">
+          <p className="mt-2 text-sm leading-relaxed text-tinta-2">
             {isVisible ? (
               <>
                 O perfil esportivo de {athleteName} pode ser apresentado a
@@ -65,18 +65,18 @@ export function ScoutingToggle({
             )}
           </p>
 
-          <div className="mt-3 rounded-xl bg-navy-50 p-3.5">
-            <p className="text-xs font-semibold text-navy-900">
+          <div className="mt-3 rounded-xl bg-fundo-2 p-3.5">
+            <p className="text-xs font-semibold text-tinta">
               O que é mostrado
             </p>
-            <p className="mt-1 text-xs leading-relaxed text-ink">
+            <p className="mt-1 text-xs leading-relaxed text-tinta">
               Nome, ano de nascimento, categoria, posição, clube e os números da
               temporada: minutos em campo, jogos, gols e assistências.
             </p>
-            <p className="mt-2.5 text-xs font-semibold text-navy-900">
+            <p className="mt-2.5 text-xs font-semibold text-tinta">
               O que nunca é mostrado
             </p>
-            <p className="mt-1 text-xs leading-relaxed text-ink">
+            <p className="mt-1 text-xs leading-relaxed text-tinta">
               Telefone, e-mail, endereço, documentos, gastos da família e
               qualquer observação de saúde.
             </p>
@@ -89,8 +89,8 @@ export function ScoutingToggle({
             disabled={pending}
             className={`mt-3 w-full rounded-xl px-4 py-3 text-sm font-semibold transition-colors disabled:opacity-50 ${
               isVisible
-                ? "border border-line bg-white text-ink"
-                : "bg-navy-900 text-white"
+                ? "border border-contorno bg-fundo text-tinta"
+                : "bg-marinho-fundo text-white"
             }`}
           >
             {pending
@@ -100,7 +100,7 @@ export function ScoutingToggle({
                 : "Quero voltar a aparecer"}
           </button>
 
-          <p className="mt-2 text-xs text-muted">
+          <p className="mt-2 text-xs text-tinta-2">
             Você pode mudar isso quando quiser, e vale a partir do momento em
             que salvar.
           </p>

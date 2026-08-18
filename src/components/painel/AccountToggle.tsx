@@ -41,7 +41,7 @@ export function AccountToggle({
   if (blocked) {
     return (
       <>
-        <p className="mb-2 text-sm text-muted">
+        <p className="mb-2 text-sm text-tinta-2">
           O acesso desta família está pausado. Os dados seguem guardados.
         </p>
         <ErrorMessage>{error}</ErrorMessage>
@@ -57,7 +57,7 @@ export function AccountToggle({
     return (
       <button
         onClick={() => setConfirming(true)}
-        className="inline-flex items-center gap-1.5 text-sm text-muted underline"
+        className="inline-flex items-center gap-1.5 text-sm text-tinta-2 underline"
       >
         <PauseCircle size={15} aria-hidden />
         Pausar acesso desta família
@@ -67,7 +67,7 @@ export function AccountToggle({
 
   return (
     <div className="space-y-2">
-      <p className="text-sm text-ink">
+      <p className="text-sm text-tinta">
         Pausar o acesso de {name}? Ela não conseguirá entrar no app, mas nada é
         apagado.
       </p>

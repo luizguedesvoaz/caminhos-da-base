@@ -48,7 +48,7 @@ export function OnboardingForm({
           <div
             key={i}
             className={`h-1.5 flex-1 rounded-full ${
-              i <= step ? "bg-gold-500" : "bg-navy-900/15"
+              i <= step ? "bg-jogo" : "bg-tinta/15"
             }`}
           />
         ))}
@@ -58,10 +58,10 @@ export function OnboardingForm({
         {/* ---------- Passo 1: o mínimo obrigatório ---------- */}
         <div className={step === 0 ? "space-y-5" : "hidden"}>
           <div>
-            <h1 className="text-2xl font-bold text-navy-900">
+            <h1 className="text-2xl font-bold text-tinta">
               Vamos começar pelo atleta
             </h1>
-            <p className="mt-2 text-muted">
+            <p className="mt-2 text-tinta-2">
               Só duas informações agora. O resto você completa depois.
             </p>
           </div>
@@ -96,11 +96,11 @@ export function OnboardingForm({
           </Field>
 
           {category && (
-            <div className="rounded-xl bg-navy-50 p-4 text-sm">
-              <p className="font-semibold text-navy-900">
+            <div className="rounded-xl bg-fundo-2 p-4 text-sm">
+              <p className="font-semibold text-tinta">
                 Em {season}, joga o {categoryLabel(category)}
               </p>
-              <p className="mt-1 text-muted">
+              <p className="mt-1 text-tinta-2">
                 {yearInCategory === "primeiro"
                   ? "É um dos mais novos da categoria — primeiro ano."
                   : "É um dos mais velhos da categoria — segundo ano."}
@@ -120,8 +120,8 @@ export function OnboardingForm({
         {/* ---------- Passo 2: clube ---------- */}
         <div className={step === 1 ? "space-y-5" : "hidden"}>
           <div>
-            <h1 className="text-2xl font-bold text-navy-900">Onde ele joga?</h1>
-            <p className="mt-2 text-muted">
+            <h1 className="text-2xl font-bold text-tinta">Onde ele joga?</h1>
+            <p className="mt-2 text-tinta-2">
               Se ainda não joga em lugar nenhum, é só pular.
             </p>
           </div>
@@ -166,38 +166,38 @@ export function OnboardingForm({
         {/* ---------- Passo 3: competições (define o degrau) ---------- */}
         <div className={step === 2 ? "space-y-5" : "hidden"}>
           <div>
-            <h1 className="text-2xl font-bold text-navy-900">
+            <h1 className="text-2xl font-bold text-tinta">
               Ele disputa alguma competição?
             </h1>
-            <p className="mt-2 text-muted">
+            <p className="mt-2 text-tinta-2">
               Marque todas que ele já jogou. É isso que define o degrau na
               pirâmide.
             </p>
           </div>
 
-          <div className="max-h-80 space-y-2 overflow-y-auto rounded-xl border border-line p-2">
+          <div className="max-h-80 space-y-2 overflow-y-auto rounded-xl border border-contorno p-2">
             {competitions.map((c) => (
               <label
                 key={c.id}
-                className="flex items-center gap-3 rounded-lg p-3 hover:bg-navy-50"
+                className="flex items-center gap-3 rounded-lg p-3 hover:bg-fundo-2"
               >
                 <input
                   type="checkbox"
                   name="competitions"
                   value={c.name}
-                  className="size-5 shrink-0 accent-navy-900"
+                  className="size-5 shrink-0 accent-acento"
                 />
-                <span className="text-sm text-ink">{c.name}</span>
+                <span className="text-sm text-tinta">{c.name}</span>
               </label>
             ))}
             {competitions.length === 0 && (
-              <p className="p-3 text-sm text-muted">
+              <p className="p-3 text-sm text-tinta-2">
                 Nenhuma competição cadastrada ainda.
               </p>
             )}
           </div>
 
-          <p className="text-sm text-muted">
+          <p className="text-sm text-tinta-2">
             Não achou a competição dele? Sem problema — você adiciona depois no
             perfil do atleta.
           </p>

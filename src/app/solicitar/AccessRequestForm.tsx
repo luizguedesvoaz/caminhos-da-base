@@ -121,15 +121,15 @@ export function AccessRequestForm() {
         />
       </Field>
 
-      <label className="flex items-start gap-3 rounded-xl bg-navy-50 p-4">
+      <label className="flex items-start gap-3 rounded-xl bg-fundo-2 p-4">
         <input
           type="checkbox"
           name="consent"
           value="1"
           required
-          className="mt-0.5 size-5 shrink-0 accent-navy-900"
+          className="mt-0.5 size-5 shrink-0 accent-acento"
         />
-        <span className="text-sm leading-relaxed text-ink">
+        <span className="text-sm leading-relaxed text-tinta">
           Autorizo o contato e o tratamento dos meus dados conforme a{" "}
           <Link href="/privacidade" className="underline">
             Política de Privacidade

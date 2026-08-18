@@ -20,8 +20,12 @@ export default async function AppLayout({
 
   return (
     <>
-      {/* pb-24 reserva espaço para a barra fixa não cobrir o conteúdo */}
-      <div className="mx-auto min-h-dvh max-w-md px-5 pb-24 pt-8">{children}</div>
+      {/* O padding inferior reserva espaço para a nav fixa E para o botão
+          flutuante que fica 16px acima dela — sem isso o botão cobre o último
+          item da lista, que foi um bug real do protótipo. */}
+      <div className="mx-auto min-h-dvh max-w-md px-[22px] pb-[148px] pt-8">
+        {children}
+      </div>
       <BottomNav />
     </>
   );

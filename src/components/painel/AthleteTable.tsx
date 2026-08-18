@@ -20,7 +20,7 @@ import {
 export function AthleteTable({ athletes }: { athletes: AthleteOverview[] }) {
   if (athletes.length === 0) {
     return (
-      <p className="rounded-xl border border-line bg-white p-5 text-sm text-muted">
+      <p className="rounded-xl border border-contorno bg-fundo p-5 text-sm text-tinta-2">
         Nenhum atleta nesta seleção.
       </p>
     );
@@ -38,12 +38,12 @@ export function AthleteTable({ athletes }: { athletes: AthleteOverview[] }) {
             <Link
               href={`/painel/atleta/${athlete.athlete_id}`}
               prefetch={false}
-              className="block rounded-xl border border-line bg-white p-4 transition-colors hover:border-navy-300"
+              className="block rounded-xl border border-contorno bg-fundo p-4 transition-colors hover:border-contorno"
             >
               <div className="flex items-start gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="font-semibold text-ink">
+                    <p className="font-semibold text-tinta">
                       {athlete.athlete_name}
                     </p>
                     <span
@@ -52,13 +52,13 @@ export function AthleteTable({ athletes }: { athletes: AthleteOverview[] }) {
                       {style.label}
                     </span>
                     {athlete.guardian_blocked && (
-                      <span className="flex items-center gap-1 rounded-full bg-navy-900/10 px-2 py-0.5 text-xs font-medium text-navy-900">
+                      <span className="flex items-center gap-1 rounded-full bg-tinta/10 px-2 py-0.5 text-xs font-medium text-tinta">
                         <PauseCircle size={11} aria-hidden />
                         Pausada
                       </span>
                     )}
                     {!athlete.scouting_visible && (
-                      <span className="flex items-center gap-1 rounded-full bg-navy-900/8 px-2 py-0.5 text-xs font-medium text-muted">
+                      <span className="flex items-center gap-1 rounded-full bg-tinta/10 px-2 py-0.5 text-xs font-medium text-tinta-2">
                         <EyeOff size={11} aria-hidden />
                         Fora da vitrine
                       </span>
@@ -72,7 +72,7 @@ export function AthleteTable({ athletes }: { athletes: AthleteOverview[] }) {
                     )}
                   </div>
 
-                  <p className="mt-1 text-sm text-muted">
+                  <p className="mt-1 text-sm text-tinta-2">
                     Degrau {athlete.step ?? 1} ·{" "}
                     {categoryLabel(athlete.category as never)}
                     {athlete.category_year &&
@@ -80,43 +80,43 @@ export function AthleteTable({ athletes }: { athletes: AthleteOverview[] }) {
                     {athlete.club_name && ` · ${athlete.club_name}`}
                   </p>
 
-                  <p className="mt-0.5 text-xs text-muted">
+                  <p className="mt-0.5 text-xs text-tinta-2">
                     Responsável: {athlete.guardian_name ?? "não vinculado"}
                   </p>
 
-                  <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
+                  <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-tinta-2">
                     <span>
-                      <strong className="tabular-nums text-ink">
+                      <strong className="tabular-nums text-tinta">
                         {athlete.actions_30d}
                       </strong>{" "}
                       ações em 30 dias
                     </span>
                     <span>
                       último uso{" "}
-                      <strong className="tabular-nums text-ink">
+                      <strong className="tabular-nums text-tinta">
                         {idle === 0 ? "hoje" : `há ${idle}d`}
                       </strong>
                     </span>
                     <span>
-                      <strong className="tabular-nums text-ink">
+                      <strong className="tabular-nums text-tinta">
                         {formatMinutes(athlete.minutes_season)}
                       </strong>{" "}
                       em campo
                     </span>
                     <span>
-                      <strong className="tabular-nums text-ink">
+                      <strong className="tabular-nums text-tinta">
                         {athlete.goals_season}
                       </strong>{" "}
                       {athlete.goals_season === 1 ? "gol" : "gols"}
                     </span>
                     <span>
-                      <strong className="tabular-nums text-ink">
+                      <strong className="tabular-nums text-tinta">
                         {athlete.assists_season}
                       </strong>{" "}
                       {athlete.assists_season === 1 ? "assist." : "assist."}
                     </span>
                     <span>
-                      <strong className="tabular-nums text-ink">
+                      <strong className="tabular-nums text-tinta">
                         {formatCents(Number(athlete.invested_cents))}
                       </strong>{" "}
                       investido
@@ -126,7 +126,7 @@ export function AthleteTable({ athletes }: { athletes: AthleteOverview[] }) {
 
                 <ChevronRight
                   size={18}
-                  className="mt-1 shrink-0 text-muted"
+                  className="mt-1 shrink-0 text-tinta-2"
                   aria-hidden
                 />
               </div>

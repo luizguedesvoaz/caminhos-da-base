@@ -69,7 +69,7 @@ export const STATUS_STYLE: Record<
   },
   sem_prazo: {
     label: () => "Sem prazo de validade",
-    className: "bg-navy-50 text-navy-900",
+    className: "bg-fundo-2 text-tinta",
   },
 };
 

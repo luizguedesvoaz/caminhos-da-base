@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getActiveAthlete } from "@/lib/athlete";
-import { AthleteHeader } from "@/components/AthleteHeader";
 import { SeasonStatsCard } from "@/components/SeasonStats";
 import { MatchRow } from "@/components/MatchRow";
 import { NewMatchForm } from "@/components/NewMatchForm";
-import { Card } from "@/components/ui";
+import { Bloco, Rotulo, TituloBloco, TituloTela } from "@/components/ui";
 import { summarize, type Match } from "@/lib/domain/season";
 import { categoryFor, categoryLabel, currentSeason } from "@/lib/domain/category";
 
@@ -15,7 +14,7 @@ export default async function TemporadaPage({
   searchParams: Promise<{ ano?: string }>;
 }) {
   const { ano } = await searchParams;
-  const { athlete, all } = await getActiveAthlete();
+  const { athlete } = await getActiveAthlete();
   const supabase = await createClient();
 
   const thisSeason = currentSeason();
@@ -36,28 +35,33 @@ export default async function TemporadaPage({
     ...new Set([thisSeason, ...allMatches.map((m) => m.season_year)]),
   ].sort((a, b) => b - a);
 
+  // Recentes primeiro na lista; cronológico no gráfico.
   const matches = allMatches.filter((m) => m.season_year === season) as Match[];
+  const cronologico = [...matches].reverse();
   const stats = summarize(matches);
 
   return (
     <>
-      <AthleteHeader
-        athlete={athlete}
-        all={all}
-        subtitle={`${categoryLabel(categoryFor(athlete.birth_year, season))} · temporada ${season}`}
-      />
+      <header>
+        <TituloTela>Temporada</TituloTela>
+        <p className="mt-1.5 text-sm text-tinta-2">
+          {athlete.full_name.split(" ")[0]} ·{" "}
+          {categoryLabel(categoryFor(athlete.birth_year, season))}
+        </p>
+      </header>
 
       {seasons.length > 1 && (
-        <div className="mb-4 flex gap-2 overflow-x-auto pb-1">
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
           {seasons.map((year) => (
             <Link
               key={year}
               href={`/temporada?ano=${year}`}
               prefetch={false}
-              className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium ${
+              aria-current={year === season ? "page" : undefined}
+              className={`flex min-h-11 shrink-0 items-center rounded-full border-2 px-4 text-[15px] font-bold tabular ${
                 year === season
-                  ? "bg-navy-900 text-white"
-                  : "border border-line bg-white text-muted"
+                  ? "border-contorno bg-acento text-acento-tinta"
+                  : "border-contorno bg-fundo text-tinta-2"
               }`}
             >
               {year}
@@ -67,25 +71,28 @@ export default async function TemporadaPage({
       )}
 
       {matches.length === 0 ? (
-        <Card>
-          <h2 className="font-semibold text-navy-900">
-            Nenhum jogo registrado em {season}
-          </h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted">
+        <Bloco enfase="destaque" className="mt-5">
+          <TituloBloco>Nenhum jogo registrado em {season}</TituloBloco>
+          <p className="mt-2 text-[14px] leading-relaxed text-tinta-2">
             Registre os jogos com os minutos em campo. Em uma temporada, esse
             histórico vira a fotografia mais honesta do momento do seu atleta —
             e é o tipo de registro que quase ninguém tem guardado.
           </p>
-        </Card>
+        </Bloco>
       ) : (
         <>
-          <SeasonStatsCard stats={stats} season={season} />
+          <SeasonStatsCard
+            stats={stats}
+            matches={cronologico}
+            season={season}
+          />
 
           <section className="mt-6">
-            <h2 className="mb-2 text-sm font-semibold text-navy-900">
-              Jogos ({matches.length})
-            </h2>
-            <ul className="space-y-2">
+            <div className="mb-3 flex items-baseline justify-between">
+              <TituloBloco>Últimos jogos</TituloBloco>
+              <Rotulo>{matches.length}</Rotulo>
+            </div>
+            <ul className="space-y-2.5">
               {matches.map((match) => (
                 <MatchRow key={match.id} match={match} />
               ))}

@@ -21,21 +21,21 @@ export default async function PainelLayout({
 
   return (
     <div className="min-h-dvh">
-      <header className="border-b border-line bg-white">
+      <header className="border-b border-contorno bg-fundo">
         <div className="mx-auto max-w-5xl px-5 py-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-xs uppercase tracking-wide text-muted">
+              <p className="text-xs uppercase tracking-wide text-tinta-2">
                 Painel do consultor
               </p>
-              <h1 className="text-lg font-bold text-navy-900">{BRAND.name}</h1>
+              <h1 className="text-lg font-bold text-tinta">{BRAND.name}</h1>
             </div>
             <div className="flex items-center gap-4 text-sm">
-              <span className="text-muted">{name}</span>
-              <Link href="/inicio" prefetch={false} className="text-navy-900 underline">
+              <span className="text-tinta-2">{name}</span>
+              <Link href="/inicio" prefetch={false} className="text-tinta underline">
                 Ver como família
               </Link>
-              <Link href="/sair" prefetch={false} className="text-muted underline">
+              <Link href="/sair" prefetch={false} className="text-tinta-2 underline">
                 Sair
               </Link>
             </div>
@@ -47,7 +47,7 @@ export default async function PainelLayout({
                 key={link.href}
                 href={link.href}
                 prefetch={false}
-                className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-ink hover:bg-navy-50"
+                className="shrink-0 rounded-lg px-3 py-2 text-sm font-medium text-tinta hover:bg-fundo-2"
               >
                 {link.label}
               </Link>

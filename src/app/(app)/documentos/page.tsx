@@ -61,13 +61,13 @@ export default async function DocumentosPage() {
       )}
 
       <section className="mt-6">
-        <h2 className="mb-2 text-sm font-semibold text-navy-900">
+        <h2 className="mb-2 text-sm font-semibold text-tinta">
           Documentos do atleta
         </h2>
 
         {list.length === 0 ? (
           <Card>
-            <p className="text-sm leading-relaxed text-muted">
+            <p className="text-sm leading-relaxed text-tinta-2">
               Nenhum documento cadastrado. Comece pelo atestado médico e pelo
               registro na federação — são os que costumam vencer sem ninguém
               perceber.

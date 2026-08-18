@@ -95,13 +95,13 @@ export function CompetitionEditor({
   return (
     <>
       <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-sm font-semibold text-navy-900">
+        <h3 className="text-sm font-semibold text-tinta">
           Competições ({competitions.length})
         </h3>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={startNew}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-navy-900 px-4 py-2 text-sm font-semibold text-white"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-marinho-fundo px-4 py-2 text-sm font-semibold text-white"
           >
             <Plus size={15} aria-hidden />
             Nova competição
@@ -109,7 +109,7 @@ export function CompetitionEditor({
           <button
             onClick={recalc}
             disabled={pending}
-            className="inline-flex items-center gap-1.5 rounded-xl border border-line bg-white px-4 py-2 text-sm text-ink disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-contorno bg-fundo px-4 py-2 text-sm text-tinta disabled:opacity-50"
           >
             <RefreshCw size={15} aria-hidden />
             {pending ? "Recalculando…" : "Recalcular todos"}
@@ -119,7 +119,7 @@ export function CompetitionEditor({
 
       {/* Mudar a tabela não muda o degrau de ninguém automaticamente — quem já
           foi avaliado mantém o resultado antigo até o recálculo. */}
-      <p className="mb-3 text-xs leading-relaxed text-muted">
+      <p className="mb-3 text-xs leading-relaxed text-tinta-2">
         Depois de alterar competições, use <strong>Recalcular todos</strong> para
         aplicar a mudança aos atletas já cadastrados. Sem isso, o novo critério
         só valeria para quem se cadastrar a partir de agora.
@@ -134,13 +134,13 @@ export function CompetitionEditor({
       <ErrorMessage>{error}</ErrorMessage>
 
       {editing && (
-        <div className="mb-4 rounded-2xl border border-navy-300 bg-white p-5">
+        <div className="mb-4 rounded-2xl border border-contorno bg-fundo p-5">
           <div className="mb-3 flex items-center justify-between">
-            <h4 className="font-semibold text-navy-900">
+            <h4 className="font-semibold text-tinta">
               {editing === "novo" ? "Nova competição" : "Editar competição"}
             </h4>
             <button onClick={() => setEditing(null)} aria-label="Fechar">
-              <X size={20} className="text-muted" aria-hidden />
+              <X size={20} className="text-tinta-2" aria-hidden />
             </button>
           </div>
 
@@ -166,7 +166,7 @@ export function CompetitionEditor({
             </Field>
 
             <fieldset>
-              <legend className="mb-2 text-sm font-medium text-ink">
+              <legend className="mb-2 text-sm font-medium text-tinta">
                 Que degrau esta competição comprova?
               </legend>
               <div className="space-y-1.5">
@@ -177,7 +177,7 @@ export function CompetitionEditor({
                 ].map((option) => (
                   <label
                     key={option.value}
-                    className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-line p-3 text-sm has-checked:border-navy-900 has-checked:bg-navy-50"
+                    className="flex cursor-pointer items-center gap-2.5 rounded-xl border border-contorno p-3 text-sm has-checked:border-contorno-forte has-checked:bg-fundo-2"
                   >
                     <input
                       type="radio"
@@ -185,9 +185,9 @@ export function CompetitionEditor({
                       onChange={() =>
                         setForm((f) => ({ ...f, stepLevel: option.value }))
                       }
-                      className="size-4 shrink-0 accent-navy-900"
+                      className="size-4 shrink-0 accent-acento"
                     />
-                    <span className="text-ink">{option.label}</span>
+                    <span className="text-tinta">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -208,11 +208,11 @@ export function CompetitionEditor({
       <div className="space-y-5">
         {byStep.map(({ level, items }) => (
           <div key={level}>
-            <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted">
+            <h4 className="mb-2 text-xs font-semibold uppercase tracking-wide text-tinta-2">
               Degrau {level} · {items.length}
             </h4>
             {items.length === 0 ? (
-              <p className="rounded-xl border border-line bg-white p-4 text-sm text-muted">
+              <p className="rounded-xl border border-contorno bg-fundo p-4 text-sm text-tinta-2">
                 Nenhuma competição neste degrau.
               </p>
             ) : (
@@ -220,12 +220,12 @@ export function CompetitionEditor({
                 {items.map((competition) => (
                   <li
                     key={competition.id}
-                    className="flex items-center gap-3 rounded-xl border border-line bg-white p-3.5"
+                    className="flex items-center gap-3 rounded-xl border border-contorno bg-fundo p-3.5"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-ink">{competition.name}</p>
+                      <p className="text-sm text-tinta">{competition.name}</p>
                       {competition.state && (
-                        <p className="text-xs text-muted">{competition.state}</p>
+                        <p className="text-xs text-tinta-2">{competition.state}</p>
                       )}
                     </div>
 
@@ -233,7 +233,7 @@ export function CompetitionEditor({
                       <div className="flex shrink-0 gap-2">
                         <button
                           onClick={() => setConfirmDelete(null)}
-                          className="rounded-lg border border-line px-3 py-1.5 text-xs text-muted"
+                          className="rounded-lg border border-contorno px-3 py-1.5 text-xs text-tinta-2"
                         >
                           Não
                         </button>
@@ -250,14 +250,14 @@ export function CompetitionEditor({
                         <button
                           onClick={() => startEdit(competition)}
                           aria-label={`Editar ${competition.name}`}
-                          className="p-1.5 text-muted hover:text-navy-900"
+                          className="p-1.5 text-tinta-2 hover:text-tinta"
                         >
                           <Pencil size={15} aria-hidden />
                         </button>
                         <button
                           onClick={() => setConfirmDelete(competition.id)}
                           aria-label={`Excluir ${competition.name}`}
-                          className="p-1.5 text-muted hover:text-red-600"
+                          className="p-1.5 text-tinta-2 hover:text-red-600"
                         >
                           <Trash2 size={15} aria-hidden />
                         </button>

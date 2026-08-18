@@ -97,7 +97,7 @@ export default async function ConquistasPage() {
         subtitle="Conquistas e recompensas"
       />
 
-      <Card className="bg-navy-900 text-white">
+      <Card className="bg-marinho-fundo text-white">
         <p className="text-sm text-white/70">Suas moedas</p>
         <p className="mt-1 text-[2.75rem] font-bold leading-none tabular-nums">
           {formatCoins(coins)}
@@ -113,38 +113,38 @@ export default async function ConquistasPage() {
       </Card>
 
       <section className="mt-6">
-        <h2 className="mb-3 text-sm font-semibold text-navy-900">Selos</h2>
+        <h2 className="mb-3 text-sm font-semibold text-tinta">Selos</h2>
         <AchievementList achievements={achievements} />
       </section>
 
       <section className="mt-6">
-        <h2 className="mb-3 text-sm font-semibold text-navy-900">
+        <h2 className="mb-3 text-sm font-semibold text-tinta">
           Trocar moedas
         </h2>
         <RewardList rewards={rewards ?? []} balance={coins} />
       </section>
 
       <section className="mt-6">
-        <h2 className="mb-3 text-sm font-semibold text-navy-900">Indicar</h2>
+        <h2 className="mb-3 text-sm font-semibold text-tinta">Indicar</h2>
         <ReferralCard requests={(referralRequests ?? []) as ReferralRequest[]} />
       </section>
 
       {redemptions && redemptions.length > 0 && (
         <section className="mt-6">
-          <h2 className="mb-3 text-sm font-semibold text-navy-900">
+          <h2 className="mb-3 text-sm font-semibold text-tinta">
             Seus resgates
           </h2>
           <ul className="space-y-2">
             {redemptions.map((r) => (
               <li
                 key={r.id}
-                className="flex items-center gap-3 rounded-xl border border-line bg-white p-3.5"
+                className="flex items-center gap-3 rounded-xl border border-contorno bg-fundo p-3.5"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="font-mono text-sm font-semibold text-navy-900">
+                  <p className="font-mono text-sm font-semibold text-tinta">
                     {r.code}
                   </p>
-                  <p className="text-xs text-muted">
+                  <p className="text-xs text-tinta-2">
                     {new Date(r.created_at).toLocaleDateString("pt-BR")} ·{" "}
                     {r.status}
                   </p>
@@ -152,7 +152,7 @@ export default async function ConquistasPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-2 text-xs leading-relaxed text-muted">
+          <p className="mt-2 text-xs leading-relaxed text-tinta-2">
             Apresente o código ao consultor ou à loja parceira para usar o
             benefício.
           </p>
@@ -161,24 +161,24 @@ export default async function ConquistasPage() {
 
       {ledger && ledger.length > 0 && (
         <section className="mt-6">
-          <h2 className="mb-3 text-sm font-semibold text-navy-900">Extrato</h2>
+          <h2 className="mb-3 text-sm font-semibold text-tinta">Extrato</h2>
           <ul className="space-y-2">
             {ledger.map((entry) => (
               <li
                 key={entry.id}
-                className="flex items-center gap-3 rounded-xl border border-line bg-white p-3.5"
+                className="flex items-center gap-3 rounded-xl border border-contorno bg-fundo p-3.5"
               >
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm text-ink">
+                  <p className="truncate text-sm text-tinta">
                     {entry.description ?? "Movimento"}
                   </p>
-                  <p className="text-xs text-muted">
+                  <p className="text-xs text-tinta-2">
                     {new Date(entry.created_at).toLocaleDateString("pt-BR")}
                   </p>
                 </div>
                 <span
                   className={`shrink-0 text-sm font-semibold tabular-nums ${
-                    entry.amount > 0 ? "text-emerald-700" : "text-muted"
+                    entry.amount > 0 ? "text-emerald-700" : "text-tinta-2"
                   }`}
                 >
                   {entry.amount > 0 ? "+" : ""}

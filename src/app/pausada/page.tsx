@@ -23,15 +23,15 @@ export default async function PausadaPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col justify-center px-6 py-10 text-center">
-      <PauseCircle size={44} className="mx-auto text-navy-900" aria-hidden />
+      <PauseCircle size={44} className="mx-auto text-tinta" aria-hidden />
 
-      <h1 className="mt-4 text-2xl font-bold text-navy-900">
+      <h1 className="mt-4 text-2xl font-bold text-tinta">
         Seu acesso está pausado
       </h1>
 
-      <p className="mt-3 leading-relaxed text-muted">
+      <p className="mt-3 leading-relaxed text-tinta-2">
         O acesso ao {BRAND.name} está temporariamente suspenso.{" "}
-        <strong className="text-ink">
+        <strong className="text-tinta">
           Nenhum dado do seu atleta foi apagado
         </strong>{" "}
         — tarefas, gastos, jogos e documentos continuam guardados e voltam
@@ -39,7 +39,7 @@ export default async function PausadaPage() {
       </p>
 
       {profile?.blocked_reason && (
-        <p className="mt-4 rounded-xl bg-navy-50 p-4 text-sm text-ink">
+        <p className="mt-4 rounded-xl bg-fundo-2 p-4 text-sm text-tinta">
           {profile.blocked_reason}
         </p>
       )}
@@ -48,12 +48,12 @@ export default async function PausadaPage() {
         href={BRAND.consultantContactUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-6 inline-flex items-center justify-center rounded-xl bg-navy-900 px-5 py-3.5 font-semibold text-white"
+        className="mt-6 inline-flex items-center justify-center rounded-xl bg-marinho-fundo px-5 py-3.5 font-semibold text-white"
       >
         Falar com o consultor
       </a>
 
-      <Link href="/sair" prefetch={false} className="mt-4 text-sm text-muted underline">
+      <Link href="/sair" prefetch={false} className="mt-4 text-sm text-tinta-2 underline">
         Sair da conta
       </Link>
     </main>

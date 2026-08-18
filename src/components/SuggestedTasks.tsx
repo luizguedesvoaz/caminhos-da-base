@@ -22,10 +22,10 @@ export function SuggestedTasks({
 
   return (
     <Card className="mb-6">
-      <h2 className="font-semibold text-navy-900">
+      <h2 className="font-semibold text-tinta">
         Sugestões para o degrau {step}
       </h2>
-      <p className="mt-1 text-sm text-muted">
+      <p className="mt-1 text-sm text-tinta-2">
         Um ponto de partida com base no momento do seu atleta. Você ajusta
         depois.
       </p>
@@ -38,7 +38,7 @@ export function SuggestedTasks({
               className="mt-1.5 size-2 shrink-0 rounded-full"
               style={{ backgroundColor: TASK_CATEGORIES[item.category].color }}
             />
-            <span className="text-ink">{item.title}</span>
+            <span className="text-tinta">{item.title}</span>
           </li>
         ))}
       </ul>

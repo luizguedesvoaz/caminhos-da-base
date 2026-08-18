@@ -13,8 +13,8 @@ export default async function EntradasPage() {
   return (
     <>
       <div className="mb-5">
-        <h2 className="text-lg font-bold text-navy-900">Entradas</h2>
-        <p className="mt-1 text-sm leading-relaxed text-muted">
+        <h2 className="text-lg font-bold text-tinta">Entradas</h2>
+        <p className="mt-1 text-sm leading-relaxed text-tinta-2">
           Duas origens chegam aqui: famílias que pediram código na página
           inicial, e indicações feitas por quem já usa o app. Aprovar gera o
           código — você envia por WhatsApp.
@@ -22,7 +22,7 @@ export default async function EntradasPage() {
       </div>
 
       <section>
-        <h3 className="mb-3 text-sm font-semibold text-navy-900">
+        <h3 className="mb-3 text-sm font-semibold text-tinta">
           Aguardando ({pending.length})
         </h3>
         <EntryQueue items={pending} />
@@ -30,7 +30,7 @@ export default async function EntradasPage() {
 
       {handled.length > 0 && (
         <section className="mt-8">
-          <h3 className="mb-3 text-sm font-semibold text-navy-900">
+          <h3 className="mb-3 text-sm font-semibold text-tinta">
             Já tratadas ({handled.length})
           </h3>
           <EntryQueue items={handled} readOnly />

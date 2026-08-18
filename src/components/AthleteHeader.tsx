@@ -25,8 +25,8 @@ export function AthleteHeader({
   if (all.length <= 1) {
     return (
       <header className="mb-5">
-        <h1 className="text-2xl font-bold text-navy-900">{firstName}</h1>
-        <p className="text-sm text-muted">{subtitle}</p>
+        <h1 className="text-2xl font-bold text-tinta">{firstName}</h1>
+        <p className="text-sm text-tinta-2">{subtitle}</p>
       </header>
     );
   }
@@ -39,29 +39,29 @@ export function AthleteHeader({
         className="flex items-center gap-1.5 text-left"
         disabled={pending}
       >
-        <span className="text-2xl font-bold text-navy-900">{firstName}</span>
+        <span className="text-2xl font-bold text-tinta">{firstName}</span>
         <ChevronDown
           size={20}
-          className={`text-muted transition-transform ${open ? "rotate-180" : ""}`}
+          className={`text-tinta-2 transition-transform ${open ? "rotate-180" : ""}`}
           aria-hidden
         />
       </button>
-      <p className="text-sm text-muted">{subtitle}</p>
+      <p className="text-sm text-tinta-2">{subtitle}</p>
 
       {open && (
-        <ul className="absolute left-0 top-full z-30 mt-2 w-64 overflow-hidden rounded-xl border border-line bg-white shadow-lg">
+        <ul className="absolute left-0 top-full z-30 mt-2 w-64 overflow-hidden rounded-xl border border-contorno bg-fundo shadow-lg">
           {all.map((a) => (
             <li key={a.id}>
               <button
-                className="flex w-full items-center justify-between px-4 py-3 text-left text-sm hover:bg-navy-50"
+                className="flex w-full items-center justify-between px-4 py-3 text-left text-sm hover:bg-fundo-2"
                 onClick={() => {
                   setOpen(false);
                   startTransition(() => switchAthlete(a.id));
                 }}
               >
-                <span className="text-ink">{a.full_name}</span>
+                <span className="text-tinta">{a.full_name}</span>
                 {a.id === athlete.id && (
-                  <Check size={16} className="text-navy-900" aria-hidden />
+                  <Check size={16} className="text-tinta" aria-hidden />
                 )}
               </button>
             </li>

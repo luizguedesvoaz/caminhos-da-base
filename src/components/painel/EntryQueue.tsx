@@ -64,7 +64,7 @@ export function EntryQueue({
 
   if (items.length === 0) {
     return (
-      <p className="rounded-xl border border-line bg-white p-5 text-sm text-muted">
+      <p className="rounded-xl border border-contorno bg-fundo p-5 text-sm text-tinta-2">
         Nada por aqui.
       </p>
     );
@@ -83,17 +83,17 @@ export function EntryQueue({
           return (
             <li
               key={`${item.kind}-${item.id}`}
-              className="rounded-xl border border-line bg-white p-4"
+              className="rounded-xl border border-contorno bg-fundo p-4"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="font-semibold text-ink">{item.name}</p>
+                    <p className="font-semibold text-tinta">{item.name}</p>
                     <span
                       className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
                         item.kind === "indicacao"
-                          ? "bg-navy-50 text-navy-900"
-                          : "bg-gold-500/15 text-gold-600"
+                          ? "bg-fundo-2 text-tinta"
+                          : "bg-jogo/15 text-jogo-tinta-2"
                       }`}
                     >
                       {item.kind === "indicacao" ? (
@@ -109,32 +109,32 @@ export function EntryQueue({
                       )}
                     </span>
                     {item.status !== "pendente" && (
-                      <span className="rounded-full bg-navy-900/8 px-2 py-0.5 text-xs text-muted">
+                      <span className="rounded-full bg-tinta/10 px-2 py-0.5 text-xs text-tinta-2">
                         {item.status}
                       </span>
                     )}
                   </div>
 
-                  <p className="mt-1 text-sm tabular-nums text-ink">
+                  <p className="mt-1 text-sm tabular-nums text-tinta">
                     {formatPhone(item.phone)}
                     {item.email && ` · ${item.email}`}
                   </p>
 
                   {item.athlete_name && (
-                    <p className="mt-0.5 text-sm text-muted">
+                    <p className="mt-0.5 text-sm text-tinta-2">
                       Atleta: {item.athlete_name}
                     </p>
                   )}
                   {item.detail && (
-                    <p className="mt-0.5 text-xs text-muted">{item.detail}</p>
+                    <p className="mt-0.5 text-xs text-tinta-2">{item.detail}</p>
                   )}
                   {item.referrer_name && (
-                    <p className="mt-0.5 text-xs text-muted">
+                    <p className="mt-0.5 text-xs text-tinta-2">
                       Indicado por {item.referrer_name} — ganha 300 moedas se a
                       família entrar
                     </p>
                   )}
-                  <p className="mt-1 text-xs text-muted">
+                  <p className="mt-1 text-xs text-tinta-2">
                     {new Date(item.created_at).toLocaleString("pt-BR")}
                   </p>
                 </div>
@@ -150,7 +150,7 @@ export function EntryQueue({
                     <button
                       onClick={() => copy(code)}
                       aria-label="Copiar código"
-                      className="rounded-lg bg-white p-1.5 text-emerald-900"
+                      className="rounded-lg bg-fundo p-1.5 text-emerald-900"
                     >
                       {copied === code ? (
                         <Check size={14} aria-hidden />
@@ -205,13 +205,13 @@ export function EntryQueue({
                       <button
                         disabled={pending}
                         onClick={() => approve(item)}
-                        className="rounded-xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                        className="rounded-xl bg-marinho-fundo px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
                       >
                         {pending ? "Aprovando…" : "Aprovar e gerar código"}
                       </button>
                       <button
                         onClick={() => setRejecting(item.id)}
-                        className="rounded-xl border border-line px-4 py-2.5 text-sm text-muted"
+                        className="rounded-xl border border-contorno px-4 py-2.5 text-sm text-tinta-2"
                       >
                         Recusar
                       </button>

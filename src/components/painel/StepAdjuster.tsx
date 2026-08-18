@@ -58,26 +58,26 @@ export function StepAdjuster({
   return (
     <div className="space-y-3">
       <fieldset>
-        <legend className="mb-2 text-sm font-medium text-ink">Novo degrau</legend>
+        <legend className="mb-2 text-sm font-medium text-tinta">Novo degrau</legend>
         <div className="space-y-1.5">
           {([3, 2, 1] as Step[]).map((value) => (
             <label
               key={value}
-              className="flex cursor-pointer items-start gap-2.5 rounded-xl border border-line p-3 has-checked:border-navy-900 has-checked:bg-navy-50"
+              className="flex cursor-pointer items-start gap-2.5 rounded-xl border border-contorno p-3 has-checked:border-contorno-forte has-checked:bg-fundo-2"
             >
               <input
                 type="radio"
                 name="step"
                 checked={step === value}
                 onChange={() => setStep(value)}
-                className="mt-0.5 size-4 shrink-0 accent-navy-900"
+                className="mt-0.5 size-4 shrink-0 accent-acento"
               />
               <span className="text-sm">
-                <span className="font-semibold text-ink">
+                <span className="font-semibold text-tinta">
                   {value} — {STEPS[value].name}
                 </span>
                 {value === currentStep && (
-                  <span className="ml-1.5 text-xs text-muted">(atual)</span>
+                  <span className="ml-1.5 text-xs text-tinta-2">(atual)</span>
                 )}
               </span>
             </label>
@@ -86,7 +86,7 @@ export function StepAdjuster({
       </fieldset>
 
       <div>
-        <label className="mb-1.5 block text-sm font-medium text-ink">
+        <label className="mb-1.5 block text-sm font-medium text-tinta">
           Motivo do ajuste
         </label>
         <input
@@ -95,7 +95,7 @@ export function StepAdjuster({
           placeholder="Ex: entrou no sub-15 do Corinthians, ainda sem registro no app"
           className={inputClass}
         />
-        <p className="mt-1 text-xs text-muted">
+        <p className="mt-1 text-xs text-tinta-2">
           Obrigatório. Fica no histórico do atleta, com sua assinatura e data.
         </p>
       </div>
